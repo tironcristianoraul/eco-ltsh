@@ -5,6 +5,11 @@ const common: ThemeOptions = {
         primary: {
             main: '#40a02b'
         },
+
+        secondary: {
+            main: '#2a8017',
+            light: '#a5ed74'
+        }
     },
     typography: {
         fontFamily: 'PT Sans Caption, sans-serif',

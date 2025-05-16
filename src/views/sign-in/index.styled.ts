@@ -1,5 +1,5 @@
 
-import { Box, styled } from '@mui/material';
+import { Box, styled, Input } from '@mui/material';
 
 export const SignInBox = styled(Box)(() => ({
 
@@ -15,4 +15,11 @@ export const SignInBox = styled(Box)(() => ({
     backdropFilter: 'blur(5px)',
     boxShadow: '0 4px 20px (0, 0, 0, 0.2',
 
+}));
+
+
+export const SignInInfo = styled(Input)(() => ({
+    backgroundColor: 'rgba(196, 224, 186, 0.6)',
+    backdropFilter: 'blur(5px)',
+    padding: 4,
 }));
