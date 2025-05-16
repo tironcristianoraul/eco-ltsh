@@ -1,17 +1,22 @@
-import { Box } from '@mui/material';
-import LogoImg from '../../assets/ceva.jpeg';
-import type { FC } from 'react';
+import { Box, Typography } from "@mui/material";
 
-interface LogoProps {
-    width?: string;
-}
+type Props = {
+  fontSize: number;
+};
 
-const Logo: FC<LogoProps> = ({ width }) => (
-    <Box
-        component='img'
-        sx={{ width, height: 'auto' }}
-        src={LogoImg}
-    />
-);
+const Logo = ({ fontSize }: Props) => {
+  return (
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Typography
+        fontWeight="bold"
+        fontSize={fontSize}
+        color="primary"
+        sx={{ WebkitTextStroke: "1px black" }}
+      >
+        Eco - LTSH
+      </Typography>
+    </Box>
+  );
+};
 
 export default Logo;
