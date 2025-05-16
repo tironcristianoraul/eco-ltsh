@@ -1,8 +1,9 @@
 import React, { type JSX } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '@mui/material'
+import { IconButton } from '@mui/material'
 import useAuth from '../../hooks/use-auth'
-import { HeaderWrapper } from './index.styled'
+import { Headerlink, HeaderWrapper } from './index.styled'
+import Logo from '../logo';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 const Header: React.FC = (): JSX.Element => {
 
@@ -12,14 +13,17 @@ const Header: React.FC = (): JSX.Element => {
 
     return (
         <HeaderWrapper>
-            <Link to={"/"}>home</Link>
-            <Link to={"/post/1"}>post</Link>
+            <Logo width='100px' />
+            <Headerlink to={"/"}>Home</Headerlink>
+            <Headerlink to={"/post/1"}>Post</Headerlink>
             {!isLoggedIn ? (
-                <Link to={"/sign-in"}>sign-in</Link>
+                <Headerlink to={"/sign-in"}>Sign-in</Headerlink>
             ) : (
                 <>
-                    <Link to={"/add"}>add</Link>
-                    <Button onClick={logout}>logout</Button>
+                    <Headerlink to={"/add"}>Add</Headerlink>
+                    <IconButton color='primary' onClick={logout}>
+                        <LogoutOutlinedIcon />
+                    </IconButton>
                 </>
             )}
         </HeaderWrapper>

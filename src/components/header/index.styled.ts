@@ -4,11 +4,16 @@ import { Link, type LinkProps } from "react-router-dom";
 
 const HeaderWrapper: FC<BoxProps> = styled(Box)(() => ({
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: '20px',
+    paddingRight: '20px',
 }));
 
 const Headerlink: FC<LinkProps> = styled(Link)(() => ({
-
+    textDecoration: 'none',
+    color: '#8ec07c ',
+    fontSize: 20
 }))
 
 export { HeaderWrapper, Headerlink };

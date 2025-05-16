@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import axios, { type AxiosInstance } from 'axios';
-import baseUrl from '../constants';
+import baseUrl from './constants';
 import store from '../../store';
 import { invalidateUser } from '../../store/slices/utils';
 
