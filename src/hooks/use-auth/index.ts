@@ -11,7 +11,7 @@ export interface AuthReturnType {
 }
 
 function useAuth(): AuthReturnType {
-	const isLoggedIn = useAppSelector((state) => state);
+	const isLoggedIn = useAppSelector((state) => state.utils.isLoggedIn);
 	const dispatch = useAppDispatch();
 
 	const login = useCallback(

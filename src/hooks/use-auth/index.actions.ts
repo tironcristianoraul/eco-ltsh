@@ -24,7 +24,7 @@ async function loginUser(params: SignInInputs): Promise<LoginData | string> {
 
 async function logoutUser(): Promise<string> {
 	try {
-		const res = await request.patch('auth/logout');
+		const res = await request.post('auth/logout');
 		const data = res.data as unknown as { message: string };
 		return data.message;
 	} catch (e) {

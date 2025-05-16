@@ -28,5 +28,9 @@ const store = configureStore({
 setupListeners(store.dispatch);
 
 export type AppDispatch = typeof store.dispatch;
-export type AppState = boolean;
+export type AppState = {
+	utils: {
+		isLoggedIn: boolean
+	}
+};
 export default store;
