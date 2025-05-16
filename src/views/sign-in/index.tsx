@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import useAuth from '../../hooks/use-auth';
 import { useNavigate } from 'react-router';
 
+import { SignInBox } from './index.styled.ts';
+import forestImg from '../../assets/forest3.jpg';
+
 export interface SignInInputs {
   email: string;
   password: string;
@@ -30,11 +33,24 @@ const SignIn = () => {
   }, [isLoggedIn, navigate])
 
   return (
-    <Box component='main' sx={{ display: 'flex', flexDirection: 'column', gap: '10', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100vw' }}>
-      <Input type='email' name='email' onChange={(e) => setEmail(() => e.target.value)} value={email} />
-      <Input type='password' name='password' onChange={(e) => setPassword(() => e.target.value)} value={password} />
-      <Button onClick={handleSubmit} >Logare</Button>
-    </Box >
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      width: '100vw',
+      backgroundImage: `url(${forestImg})`,
+      backroundSize : '100vh',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      }}>
+        <SignInBox>
+        <Input type='email' name='email' onChange={(e) => setEmail(() => e.target.value)} value={email} />
+        <Input type='password' name='password' onChange={(e) => setPassword(() => e.target.value)} value={password} />
+        <Button onClick={handleSubmit} >Logare</Button>
+        </SignInBox>
+    </Box>
+ 
   )
 };
 

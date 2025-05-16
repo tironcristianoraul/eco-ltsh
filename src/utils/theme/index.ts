@@ -3,7 +3,7 @@ import { createTheme, type ThemeOptions } from '@mui/material';
 const common: ThemeOptions = {
     palette: {
         primary: {
-            main: '#8ec07c'
+            main: '#40a02b'
         },
     },
     typography: {
