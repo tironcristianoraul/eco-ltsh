@@ -1,5 +1,5 @@
 
-import { Box, styled, Input } from '@mui/material';
+import { Box, styled, Input, Typography } from '@mui/material';
 
 export const SignInBox = styled(Box)(() => ({
 
@@ -13,7 +13,7 @@ export const SignInBox = styled(Box)(() => ({
     borderRadius: '12px',
     backgroundColor: 'rgba(190, 232, 174, 0.6)',
     backdropFilter: 'blur(5px)',
-    boxShadow: '0 4px 20px (0, 0, 0, 0.2',
+    boxShadow: '0 4px 20px (0, 0, 0, 0.3)',
 
 }));
 
@@ -21,5 +21,10 @@ export const SignInBox = styled(Box)(() => ({
 export const SignInInfo = styled(Input)(() => ({
     backgroundColor: 'rgba(196, 224, 186, 0.6)',
     backdropFilter: 'blur(5px)',
+    borderRadius: '12px',
     padding: 4,
+}));
+
+export const EcoLtshLogo = styled(Typography)(() => ({
+    color: '#37871a'
 }));

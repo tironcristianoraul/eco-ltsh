@@ -1,9 +1,9 @@
-import { Box, Button, Input } from "@mui/material";
+import { Box, Button, Input, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
 import { useNavigate } from "react-router";
 
-import { SignInBox, SignInInfo } from "./index.styled.ts";
+import { SignInBox, SignInInfo, EcoLtshLogo } from "./index.styled.ts";
 import forestImg from "../../assets/forest4.jpg";
 
 export interface SignInInputs {
@@ -42,11 +42,20 @@ const SignIn = () => {
         backgroundSize: "cover",
       }}
     >
+    
       <SignInBox>
+
+        <EcoLtshLogo
+          variant="h3"
+        >
+            ECO-LTSH
+        </EcoLtshLogo>
+
         <SignInInfo
           type="email"
           name="email"
           placeholder="E-Mail"
+          disableUnderline
           onChange={(e) => setEmail(() => e.target.value)}
           value={email}
         />
@@ -54,6 +63,7 @@ const SignIn = () => {
           type="password"
           name="password"
           placeholder="Password"
+          disableUnderline
           onChange={(e) => setPassword(() => e.target.value)}
           value={password}
         />
@@ -70,7 +80,7 @@ const SignIn = () => {
         }}
         
         onClick={handleSubmit}
-        >Logare</Button>
+        >Log In</Button>
       </SignInBox>
     </Box>
   );
