@@ -10,8 +10,9 @@ export interface SignInInputs {
 
 const SignIn = () => {
 
-  const { login, isLoggedIn } = useAuth();
   const navigate = useNavigate();
+
+  const { login, isLoggedIn } = useAuth();
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -24,9 +25,8 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn)
       navigate('/');
-    }
   }, [isLoggedIn, navigate])
 
   return (

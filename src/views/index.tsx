@@ -6,6 +6,7 @@ import Post from './post';
 import Home from './home';
 import Add from './add';
 import useAuth from '../hooks/use-auth';
+import CommonRoute from '../components/route';
 // import { AuthContext } from '../utils/context/auth';
 // import useAuth from '../hooks/fetch-hooks/use-auth';
 // import { request } from '../utils/config/axios';
@@ -38,9 +39,11 @@ const Views: FC = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/sign-in' element={<SignIn />} />
-                <Route path='/add' element={<ProtectedRoute isLoggedIn={isLoggedIn} children={<Add />} />} />
-                <Route path='/post/:id' element={<Post />} />
-                <Route path='/' element={<Home />} />
+                <Route path='/' element={<CommonRoute />}>
+                    <Route path='/add' element={<ProtectedRoute isLoggedIn={isLoggedIn} children={<Add />} />} />
+                    <Route path='/post/:id' element={<Post />} />
+                    <Route path='/' element={<Home />} />
+                </Route>
             </Routes >
         </BrowserRouter >
     );
