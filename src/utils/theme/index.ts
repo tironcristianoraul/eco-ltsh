@@ -7,9 +7,10 @@ const common: ThemeOptions = {
     },
 
     secondary: {
-      main: "#2a8017",
-      light: "#448613",
+      main: "#328c19",
+      light: "#89e346",
       dark: "#206610",
+      
     },
   },
   typography: {
