@@ -1,3 +1,4 @@
+
 import { Box, Button, Input, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
@@ -67,7 +68,6 @@ const SignIn = () => {
           onChange={(e) => setPassword(() => e.target.value)}
           value={password}
         />
-
         <Button sx={{
 
           backgroundColor: 'secondary.main',
