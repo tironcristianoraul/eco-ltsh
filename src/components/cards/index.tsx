@@ -1,24 +1,45 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Box, ButtonBase, Typography, type ButtonBaseProps } from "@mui/material";
+import CardBase from ".";
+import type { FC } from "react";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
+type Props = {
+  image?: string;
+  title?: string;
+};
 
-export default function CustomisedCards() {
+const Card: FC<ButtonBaseProps & Props> = ({
+  image,
+  title,
+  ...rest
+}: Props & ButtonBaseProps) => {
   return (
-    <Card sx={{ minWidth: 375 }}>
-
-    </Card>
+    <CardBase>
+      <ButtonBase
+        {...rest}
+        sx={{
+          minWidth: "300px",
+          maxWidth: "300px",
+          maxHeight: "400px",
+          minHeight: "400px",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {image && <img src={image} height={400 / 2} />}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 1,
+          }}
+        >
+          <Typography fontSize={32}>{title}</Typography>
+        </Box>
+      </ButtonBase>
+    </CardBase>
   );
-}
+};
+
+export default Card;
