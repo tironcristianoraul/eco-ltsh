@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   IconButton,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
@@ -43,9 +44,11 @@ const Header: React.FC = (): JSX.Element => {
       ) : (
         <>
           <Headerlink to={"/add"}>Add</Headerlink>
-          <IconButton color="primary" onClick={logout}>
-            <LogoutOutlinedIcon />
-          </IconButton>
+          <Tooltip title='Delogare'>
+            <IconButton color="primary" onClick={logout}>
+              <LogoutOutlinedIcon />
+            </IconButton>
+          </Tooltip>
         </>
       )}
     </HeaderWrapper>

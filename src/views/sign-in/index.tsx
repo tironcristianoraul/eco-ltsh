@@ -1,5 +1,5 @@
 
-import { Box, Button, Input, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
 import { useNavigate } from "react-router";
@@ -43,13 +43,13 @@ const SignIn = () => {
         backgroundSize: "cover",
       }}
     >
-    
+
       <SignInBox>
 
         <EcoLtshLogo
           variant="h3"
         >
-            ECO-LTSH
+          ECO-LTSH
         </EcoLtshLogo>
 
         <SignInInfo
@@ -78,8 +78,8 @@ const SignIn = () => {
           },
 
         }}
-        
-        onClick={handleSubmit}
+
+          onClick={handleSubmit}
         >Log In</Button>
       </SignInBox>
     </Box>
