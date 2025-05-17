@@ -11,9 +11,9 @@ const HeaderWrapper: FC<BoxProps> = styled(Box)(() => ({
   marginTop: "8px",
 }));
 
-const Headerlink: FC<LinkProps> = styled(Link)(() => ({
+const Headerlink: FC<LinkProps> = styled(Link)(({ theme }) => ({
   textDecoration: "none",
-  color: "#8ec07c ",
+  color: theme.palette.primary.main,
   fontSize: 20,
 }));
 

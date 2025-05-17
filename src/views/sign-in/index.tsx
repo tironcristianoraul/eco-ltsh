@@ -1,4 +1,4 @@
-import { Box, Button, Input } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
 import { useNavigate } from "react-router";
@@ -58,19 +58,19 @@ const SignIn = () => {
           value={password}
         />
 
-        <Button sx={{
-
-          backgroundColor: 'secondary.main',
-          color: '#8ec07c',
-          '&:hover': {
-            backgroundColor: 'secondary.light',
-            color: 'secondary.main'
-          },
-
-        }}
-        
-        onClick={handleSubmit}
-        >Logare</Button>
+        <Button
+          sx={{
+            backgroundColor: "secondary.main",
+            color: "#8ec07c",
+            "&:hover": {
+              backgroundColor: "secondary.light",
+              color: "secondary.main",
+            },
+          }}
+          onClick={handleSubmit}
+        >
+          Logare
+        </Button>
       </SignInBox>
     </Box>
   );
