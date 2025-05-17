@@ -1,9 +1,10 @@
-import { Box, Button } from "@mui/material";
+
+import { Box, Button, Input, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
 import { useNavigate } from "react-router";
 
-import { SignInBox, SignInInfo } from "./index.styled.ts";
+import { SignInBox, SignInInfo, EcoLtshLogo } from "./index.styled.ts";
 import forestImg from "../../assets/forest4.jpg";
 
 export interface SignInInputs {
@@ -42,11 +43,20 @@ const SignIn = () => {
         backgroundSize: "cover",
       }}
     >
+    
       <SignInBox>
+
+        <EcoLtshLogo
+          variant="h3"
+        >
+            ECO-LTSH
+        </EcoLtshLogo>
+
         <SignInInfo
           type="email"
           name="email"
           placeholder="E-Mail"
+          disableUnderline
           onChange={(e) => setEmail(() => e.target.value)}
           value={email}
         />
@@ -54,23 +64,23 @@ const SignIn = () => {
           type="password"
           name="password"
           placeholder="Password"
+          disableUnderline
           onChange={(e) => setPassword(() => e.target.value)}
           value={password}
         />
+        <Button sx={{
 
-        <Button
-          sx={{
-            backgroundColor: "secondary.main",
-            color: "#8ec07c",
-            "&:hover": {
-              backgroundColor: "secondary.light",
-              color: "secondary.main",
-            },
-          }}
-          onClick={handleSubmit}
-        >
-          Logare
-        </Button>
+          backgroundColor: 'secondary.main',
+          color: '#8ec07c',
+          '&:hover': {
+            backgroundColor: 'secondary.light',
+            color: 'secondary.main'
+          },
+
+        }}
+        
+        onClick={handleSubmit}
+        >Log In</Button>
       </SignInBox>
     </Box>
   );
