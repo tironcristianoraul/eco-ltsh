@@ -1,6 +1,6 @@
 import { Card, styled } from "@mui/material";
 
-const CardBase = styled(Card)(() => ({
+const CardBase = styled(Card)(({theme}) => ({
   minWidth: "300px",
   maxWidth: "300px",
   maxHeight: "400px",
@@ -8,6 +8,7 @@ const CardBase = styled(Card)(() => ({
   display: "flex",
   flexDirection: "column",
   borderRadius: 16,
+  border: `4px solid ${theme.palette.secondary.main}`　// sloid 🥀
 }));
 
 export default CardBase;

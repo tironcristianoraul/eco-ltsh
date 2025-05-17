@@ -1,6 +1,8 @@
 import { Box, ButtonBase, Typography, type ButtonBaseProps } from "@mui/material";
-import CardBase from ".";
+
 import type { FC } from "react";
+import CardBase from "./index.styled";
+
 
 type Props = {
   image?: string;
@@ -23,9 +25,11 @@ const Card: FC<ButtonBaseProps & Props> = ({
           minHeight: "400px",
           display: "flex",
           flexDirection: "column",
+          // backgroundColor: "secondary.light",
+          backgroundSize: "cover"
         }}
       >
-        {image && <img src={image} height={400 / 2} />}
+        {image && <img src={image} height={400 / 2} width="400"/>}
         <Box
           sx={{
             display: "flex",
