@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, Typography, Input } from "@mui/material";
-import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
+import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import "./quill.snow.css";
 import ReactQuill from 'react-quill-new';
+import { Masonry } from "@mui/lab";
 
 const modules = {
     toolbar: [
@@ -23,7 +25,11 @@ type Props = {
     setTitle: Dispatch<SetStateAction<string>>;
     categories: string;
     setCategories: Dispatch<SetStateAction<string>>;
+    images: File[];
+    setImages: Dispatch<SetStateAction<File[]>>
 };
+
+const MAX_IMAGES = 10;
 
 const TextEditor = ({
     conditions = true, // default to true if not provided
@@ -34,8 +40,11 @@ const TextEditor = ({
     setTitle,
     categories,
     setCategories,
+    images,
+    setImages
 }: Props) => {
     const [plainText, setPlainText] = useState<string>("");
+    const [dragOver, setDragOver] = useState(false);
     const [isReadyToSubmit, setIsReadyToSubmit] = useState<boolean>(false);
     const quillRef = useRef(null);
 
@@ -53,14 +62,56 @@ const TextEditor = ({
         setIsReadyToSubmit(conditions && filledFields >= 3);
     }, [plainText, title, categories, conditions]);
 
+    const addFiles = useCallback((newFiles: File[]) => {
+        setImages(prev => {
+            const remaining = MAX_IMAGES - prev.length;
+            const filesToAdd = newFiles.slice(0, remaining);
+
+            // Optional: Prevent duplicate file names
+            const uniqueFiles = filesToAdd.filter(
+                file => !prev.some(p => p.name === file.name && p.size === file.size)
+            );
+
+            return [...prev, ...uniqueFiles];
+        });
+    }, []);
+
+    const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            addFiles(Array.from(e.target.files));
+        }
+    };
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragOver(false);
+        if (e.dataTransfer.files) {
+            addFiles(Array.from(e.dataTransfer.files));
+        }
+    };
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragOver(true);
+    };
+
+    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragOver(false);
+    };
+
     return (
         <Box
             sx={{
                 backgroundColor: "white",
-                padding: 2,
+                padding: 10,
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
+                width: 1000
             }}
         >
             <Input
@@ -75,6 +126,73 @@ const TextEditor = ({
                 placeholder="Categorie"
                 fullWidth
             />
+
+            <Box
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                sx={{
+                    border: "2px dashed gray",
+                    padding: 10,
+                    textAlign: "center",
+                    marginTop: 2,
+                    backgroundColor: dragOver ? "#f0f0f0" : "transparent",
+                    transition: "background-color 0.2s",
+                    borderRadius: 2,
+                    gap: 5
+                }}
+            >
+                {images.length >= MAX_IMAGES && (
+                    <Box color="red" mt={1}>
+                        You can upload up to {MAX_IMAGES} images only.
+                    </Box>
+                )}
+                Drag & drop images here, or click to upload
+                <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    id="upload-input"
+                    onChange={handleFileInputChange}
+                />
+                <label htmlFor="upload-input" style={{ display: "block", margin: 8 }}>
+                    <Box
+                        component="span"
+                        sx={{
+                            backgroundColor: "#1976d2",
+                            color: "white",
+                            px: 2,
+                            py: 1,
+                            borderRadius: 1,
+                            cursor: "pointer"
+                        }}
+                    >
+                        Choose Files
+                    </Box>
+                </label>
+                <Box display='flex'>
+                    <Masonry columns={2} spacing={1} sx={{ width: '100%' }} sequential>
+                        {images.map(img => (
+                            <img
+                                key={img.name}
+                                src={URL.createObjectURL(img)}
+                                alt={img.name}
+                                style={{ objectFit: "cover", borderRadius: 8 }}
+                                onLoad={(event) => {
+                                    const imgElement = event.target as HTMLImageElement;
+                                    const isPortrait = imgElement.naturalHeight > imgElement.naturalWidth;
+                                    if (isPortrait) {
+                                        imgElement.style.maxHeight = '200px'
+                                    } else {
+                                        imgElement.style.maxWidth = '100%'
+                                    }
+                                }}
+                            />
+                        ))}
+                    </Masonry>
+                </Box>
+            </Box>
             <ReactQuill
                 ref={quillRef}
                 theme="snow"

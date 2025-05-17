@@ -13,7 +13,6 @@ export interface CreatePostFields {
 }
 
 const Add = () => {
-
     const { create } = usePost();
 
     const [value, setValue] = useState<string>("");
@@ -27,31 +26,12 @@ const Add = () => {
             title,
             category,
             content: value
-        })
-    }
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const selectedFiles = Array.from(e.target.files);
-
-            setImages(prev => {
-                // Calculate remaining slots
-                const remainingSlots = 10 - prev.length;
-                if (remainingSlots <= 0) return prev;
-
-                // Only add up to the remaining slots
-                const filesToAdd = selectedFiles.slice(0, remainingSlots);
-                return [...prev, ...filesToAdd];
-            });
-        }
+        });
     };
-
-    console.log(images);
-
 
     return (
         <Box flex={1} display="flex" flexDirection="column">
-            <Box flex={1} display="flex" flexDirection="column">
+            <Box flex={1} display="flex" flexDirection="column" alignItems='center'>
                 <Box
                     sx={{
                         backgroundColor: "white",
@@ -71,12 +51,13 @@ const Add = () => {
                         setCategories={setCategory}
                         conditions={!!value && !!title && !!category}
                         submitFunction={handleSubmit}
+                        images={images}
+                        setImages={setImages}
                     />
                 </Box>
-                <input type="file" multiple onChange={(e) => handleChange(e)} />
-                {images.map(img => (
-                    <img src={URL.createObjectURL(img)} key={img.name} />
-                ))}
+
+
+
             </Box>
         </Box>
     );
