@@ -1,7 +1,7 @@
 
 import { Box, styled, Input, Typography } from '@mui/material';
 
-export const SignInBox = styled(Box)(() => ({
+export const SignInBox = styled(Box)(({theme}) => ({
 
     display: 'flex',
     flexDirection: 'column',
@@ -14,7 +14,7 @@ export const SignInBox = styled(Box)(() => ({
     backgroundColor: 'rgba(190, 232, 174, 0.6)',
     backdropFilter: 'blur(5px)',
     boxShadow: '0 4px 20px (0, 0, 0, 0.3)',
-
+    [theme.breakpoints.down("sm")]: {width:"75vw"} // Japanese Tech No. 76: 切腹
 }));
 
 
@@ -23,6 +23,7 @@ export const SignInInfo = styled(Input)(() => ({
     backdropFilter: 'blur(5px)',
     borderRadius: '12px',
     padding: 4,
+    paddingLeft: 4,
 }));
 
 export const EcoLtshLogo = styled(Typography)(() => ({
