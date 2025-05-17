@@ -1,6 +1,6 @@
 import { Box, Button, Typography, Input } from "@mui/material";
 import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
-import "react-quill/dist/quill.snow.css";
+import "./quill.snow.css";
 import ReactQuill from 'react-quill-new';
 
 const modules = {
