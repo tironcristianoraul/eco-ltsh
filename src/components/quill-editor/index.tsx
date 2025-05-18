@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateA
 import "./quill.snow.css";
 import ReactQuill from 'react-quill-new';
 import { Masonry } from "@mui/lab";
+import { EditorWrapper } from "./index.styled";
 
 const modules = {
     toolbar: [
@@ -104,16 +105,7 @@ const TextEditor = ({
     };
 
     return (
-        <Box
-            sx={{
-                backgroundColor: "white",
-                padding: 10,
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-                width: 1000
-            }}
-        >
+        <EditorWrapper>
             <Input
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
@@ -207,7 +199,7 @@ const TextEditor = ({
             <Button disabled={!isReadyToSubmit} onClick={submitFunction}>
                 <Typography>Submit</Typography>
             </Button>
-        </Box >
+        </EditorWrapper >
     );
 };
 
