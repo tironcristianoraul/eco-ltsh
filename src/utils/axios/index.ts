@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import axios, { type AxiosInstance } from "axios";
-import baseUrl from "./constants";
+import { baseUrl, guestUrl } from "./constants";
 import store from "../../store";
 import { invalidateUser } from "../../store/slices/utils";
 import eventEmitter from "../mitt";
@@ -10,7 +10,12 @@ const request: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
-const instances: AxiosInstance[] = [request];
+const guestRequest: AxiosInstance = axios.create({
+  baseURL: guestUrl,
+  withCredentials: true,
+});
+
+const instances: AxiosInstance[] = [request, guestRequest];
 
 for (const instance of instances) {
   instance.interceptors.response.use(
@@ -38,4 +43,4 @@ for (const instance of instances) {
   );
 }
 
-export { request };
+export { request, guestRequest };

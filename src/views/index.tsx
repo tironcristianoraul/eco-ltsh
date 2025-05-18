@@ -28,6 +28,7 @@ const Views: FC = () => {
 
     const { isLoggedIn } = useAuth();
 
+
     const ProtectedRoute: React.FC<{ isLoggedIn: boolean, children: React.ReactElement }> = ({ isLoggedIn, children }) => {
         if (!isLoggedIn) {
             return <Navigate to={'/'} replace />;
