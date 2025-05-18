@@ -8,13 +8,16 @@ const HeaderWrapper: FC<BoxProps> = styled(Box)(() => ({
   alignItems: "center",
   paddingLeft: "20px",
   paddingRight: "20px",
-  marginTop: "8px",
 }));
 
 const Headerlink: FC<LinkProps> = styled(Link)(({ theme }) => ({
   textDecoration: "none",
   color: theme.palette.primary.main,
   fontSize: 20,
+  font: theme.typography.fontFamily,
+  ':hover': {
+    textDecoration: 'underline'
+  }
 }));
 
 export { HeaderWrapper, Headerlink };

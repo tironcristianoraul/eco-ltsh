@@ -1,4 +1,4 @@
-import React, { type JSX } from "react";
+import React, { useState, type JSX } from "react";
 import {
   Box,
   Button,
@@ -12,43 +12,56 @@ import useAuth from "../../hooks/use-auth";
 import { Headerlink, HeaderWrapper } from "./index.styled";
 import Logo from "../logo";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router";
+import HeaderDrawer from "../header-drawer";
 
 const Header: React.FC = (): JSX.Element => {
   const { logout, isLoggedIn } = useAuth();
-  console.log(isLoggedIn);
+  const [open, setOpen] = useState<boolean>(false);
 
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down("sm"));
+  const md = useMediaQuery(theme.breakpoints.down("md"));
 
   const nav = useNavigate();
+
+  const toggleDrawer = (): void => {
+    setOpen(prev => !prev)
+  }
 
   return (
     <HeaderWrapper>
       <Box
         display="flex"
         alignItems="center"
-        gap={sm ? 4 : 8}
-        width={sm ? "100vw" : "auto"}
       >
-        <Logo fontSize={sm ? 20 : 48} />
-        <Box display="flex" alignItems="center" gap={sm ? 2 : 8}>
-          <Headerlink to={"/"}>Acasă</Headerlink>
-          <Headerlink to={"/post/1"}>Posts</Headerlink>
-        </Box>
+        <Logo fontSize={sm ? 16 : 48} />
       </Box>
-      {!isLoggedIn ? (
-        <Button variant="contained" onClick={() => nav("/sign-in")}>
-          <Typography>Sign In</Typography>
-        </Button>
-      ) : (
+      {!md ? (
         <>
-          <Headerlink to={"/add"}>Add</Headerlink>
-          <Tooltip title='Delogare'>
-            <IconButton color="primary" onClick={logout}>
-              <LogoutOutlinedIcon />
-            </IconButton>
-          </Tooltip>
+          <Box display="flex" alignItems="center" gap={10}>
+            <Headerlink to={"/"}>Acasă</Headerlink>
+            <Headerlink to={"/post"}>Posts</Headerlink>
+          </Box>
+          {!isLoggedIn ? (
+            <Button variant="contained" onClick={() => nav("/sign-in")}>
+              <Typography>Sign In</Typography>
+            </Button>
+          ) : (
+            <>
+              <Headerlink to={"/add"}>Add</Headerlink>
+              <Tooltip title='Delogare'>
+                <IconButton color="primary" onClick={logout}>
+                  <LogoutOutlinedIcon />
+                </IconButton>
+              </Tooltip>
+            </>
+          )}
+        </>) : (
+        <>
+          <IconButton onClick={toggleDrawer}><MenuIcon color="primary" /></IconButton>
+          <HeaderDrawer open={open} toggleDrawer={toggleDrawer} />
         </>
       )}
     </HeaderWrapper>

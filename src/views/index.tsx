@@ -41,7 +41,7 @@ const Views: FC = () => {
                 <Route path='/sign-in' element={<SignIn />} />
                 <Route path='/' element={<CommonRoute />}>
                     <Route path='/add' element={<ProtectedRoute isLoggedIn={!!isLoggedIn} children={<Add />} />} />
-                    <Route path='/post/:id' element={<Post />} />
+                    <Route path='/post' element={<Post />} />
                     <Route path='/' element={<Home />} />
                 </Route>
             </Routes >
