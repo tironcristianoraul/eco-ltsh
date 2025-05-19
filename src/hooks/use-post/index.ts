@@ -1,14 +1,15 @@
 import { useCallback, useState } from 'react';
-import { createPost, getAllPosts, type IPost } from './index.actions';
+import { createPost, getAllPosts, getSinglePost, type IPost } from './index.actions';
 import type { CreatePostFields } from '../../views/add';
 
-export interface PostReturnType {
+export interface PostReturnType<T extends IPost | IPost[]> {
+    post: T;
     create: (postFields: CreatePostFields) => void;
     getAll: () => void;
-    post: IPost | IPost[]
+    getSingle: (id: string) => void
 }
 
-function usePost(): PostReturnType {
+function usePost<T extends IPost | IPost[]>(): PostReturnType<T> {
 
     const [post, setPost] = useState<IPost | IPost[]>([]);
 
@@ -38,10 +39,24 @@ function usePost(): PostReturnType {
         []
     );
 
+    const getSingle = useCallback(
+        async (id: string) => {
+            try {
+                const res = await getSinglePost(id);
+                if (typeof res != 'string')
+                    setPost(res);
+            } catch (errorMessage) {
+                console.error(errorMessage);
+            }
+        },
+        []
+    );
+
     return {
+        post: post as T,
         create,
-        post,
-        getAll
+        getAll,
+        getSingle
     };
 }
 

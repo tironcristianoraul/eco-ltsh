@@ -55,9 +55,6 @@ const Add = () => {
                         setImages={setImages}
                     />
                 </Box>
-
-
-
             </Box>
         </Box>
     );

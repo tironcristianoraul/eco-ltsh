@@ -11,7 +11,9 @@ export interface IPost {
     title: string;
     category: string;
     content: string;
-    image: string | string[];
+    imageNames: string[];
+    image: string;
+    _id: string;
 }
 
 async function createPost({ category, content, images, title }: CreatePostFields): Promise<PromiseData | string> {
@@ -43,5 +45,15 @@ async function getAllPosts(): Promise<IPost[] | string> {
     }
 }
 
+async function getSinglePost(id: string): Promise<IPost[] | string> {
+    try {
+        const res: any = await guestRequest.get(`/post/${id}`);
+        return res?.data?.post;
+    } catch (e) {
+        const error = e as AxiosError;
+        const data = error.response?.data as { error: string };
+        throw new Error(data?.error || 'Failed to login.');
+    }
+}
 
-export { createPost, getAllPosts };
+export { createPost, getAllPosts, getSinglePost };
