@@ -4,6 +4,7 @@ const common: ThemeOptions = {
   palette: {
     primary: {
       main: "#24641C",
+      dark: "#74c23a",
     },
 
     secondary: {
