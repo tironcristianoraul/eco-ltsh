@@ -56,4 +56,16 @@ async function getSinglePost(id: string): Promise<IPost[] | string> {
     }
 }
 
-export { createPost, getAllPosts, getSinglePost };
+async function deleteSinglePost(id: string): Promise<IPost[] | string> {
+    try {
+        const res: any = await request.delete(`/post/${id}`);
+        return res?.data?.post;
+    } catch (e) {
+        const error = e as AxiosError;
+        const data = error.response?.data as { error: string };
+        throw new Error(data?.error || 'Failed to login.');
+    }
+}
+
+
+export { createPost, getAllPosts, getSinglePost, deleteSinglePost };

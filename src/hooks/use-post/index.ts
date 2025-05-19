@@ -1,26 +1,30 @@
 import { useCallback, useState } from 'react';
-import { createPost, getAllPosts, getSinglePost, type IPost } from './index.actions';
+import { createPost, deleteSinglePost, getAllPosts, getSinglePost, type IPost } from './index.actions';
 import type { CreatePostFields } from '../../views/add';
 
 export interface PostReturnType<T extends IPost | IPost[]> {
     post: T;
+    isError: boolean;
     create: (postFields: CreatePostFields) => void;
     getAll: () => void;
-    getSingle: (id: string) => void
+    getSingle: (id: string) => void;
+    deletePost: (id: string) => void;
 }
 
 function usePost<T extends IPost | IPost[]>(): PostReturnType<T> {
 
     const [post, setPost] = useState<IPost | IPost[]>([]);
+    const [isError, setIsError] = useState<boolean>(false);
 
     const create = useCallback(
         async (u: CreatePostFields) => {
             try {
                 await createPost(u);
-                console.log(u);
+                setIsError(false);
 
             } catch (errorMessage) {
                 console.error(errorMessage);
+                setIsError(true);
             }
         },
         []
@@ -32,8 +36,10 @@ function usePost<T extends IPost | IPost[]>(): PostReturnType<T> {
                 const res = await getAllPosts();
                 if (typeof res != 'string')
                     setPost(res);
+                setIsError(false);
             } catch (errorMessage) {
                 console.error(errorMessage);
+                setIsError(true);
             }
         },
         []
@@ -45,8 +51,23 @@ function usePost<T extends IPost | IPost[]>(): PostReturnType<T> {
                 const res = await getSinglePost(id);
                 if (typeof res != 'string')
                     setPost(res);
+                setIsError(false);
             } catch (errorMessage) {
                 console.error(errorMessage);
+                setIsError(true);
+            }
+        },
+        []
+    );
+
+    const deletePost = useCallback(
+        async (id: string) => {
+            try {
+                await deleteSinglePost(id);
+                setIsError(false);
+            } catch (errorMessage) {
+                console.error(errorMessage);
+                setIsError(true)
             }
         },
         []
@@ -56,7 +77,9 @@ function usePost<T extends IPost | IPost[]>(): PostReturnType<T> {
         post: post as T,
         create,
         getAll,
-        getSingle
+        getSingle,
+        deletePost,
+        isError
     };
 }
 
