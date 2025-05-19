@@ -4,6 +4,7 @@ import {
 import { useState } from "react";
 import TextEditor from "../../components/quill-editor";
 import usePost from "../../hooks/use-post";
+import { useNavigate } from "react-router";
 
 export interface CreatePostFields {
     images: File[];
@@ -13,12 +14,14 @@ export interface CreatePostFields {
 }
 
 const Add = () => {
-    const { create } = usePost();
+    const { create, isError } = usePost();
 
     const [value, setValue] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const [category, setCategory] = useState<string>("");
     const [images, setImages] = useState<File[]>([]);
+
+    const navigate = useNavigate();
 
     const handleSubmit = () => {
         create({
@@ -27,6 +30,8 @@ const Add = () => {
             category,
             content: value
         });
+        if (!isError)
+            navigate('/post')
     };
 
     return (
@@ -55,9 +60,6 @@ const Add = () => {
                         setImages={setImages}
                     />
                 </Box>
-
-
-
             </Box>
         </Box>
     );

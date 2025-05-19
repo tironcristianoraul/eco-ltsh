@@ -3,13 +3,15 @@ import Card from "../../components/cards";
 import usePost from "../../hooks/use-post";
 import { url } from "../../utils/axios/constants";
 import { Box, Grid } from "@mui/material";
-
 import gradientImg from "../../assets/gradienttantumverde29292.jpg";
+import { useNavigate } from "react-router";
+
 
 
 const Post = () => {
 
     const { getAll, post } = usePost();
+    const nav = useNavigate();
 
     useEffect(() => {
         getAll();
