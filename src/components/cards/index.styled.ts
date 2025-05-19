@@ -8,7 +8,7 @@ const CardBase = styled(Card)(({theme}) => ({
   display: "flex",
   flexDirection: "column",
   borderRadius: 16,
-  border: `4px solid ${theme.palette.secondary.main}`　// sloid 🥀
+  border: `4px solid ${theme.palette.secondary.main}` // sloid 🥀
 }));
 
 export default CardBase;
