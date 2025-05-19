@@ -5,6 +5,7 @@ import "./quill.snow.css";
 import ReactQuill from 'react-quill-new';
 import { Masonry } from "@mui/lab";
 import { EditorWrapper } from "./index.styled";
+import DeletableImage from "../deletable-image";
 
 const modules = {
     toolbar: [
@@ -48,6 +49,8 @@ const TextEditor = ({
     const [dragOver, setDragOver] = useState(false);
     const [isReadyToSubmit, setIsReadyToSubmit] = useState<boolean>(false);
     const quillRef = useRef(null);
+
+    console.log(images);
 
 
     useEffect(() => {
@@ -165,20 +168,13 @@ const TextEditor = ({
                 </label>
                 <Box display='flex'>
                     <Masonry columns={2} spacing={1} sx={{ width: '100%' }} sequential>
-                        {images.map(img => (
-                            <img
+                        {images.map((img, index) => (
+                            <DeletableImage
                                 key={img.name}
                                 src={URL.createObjectURL(img)}
                                 alt={img.name}
-                                style={{ objectFit: "cover", borderRadius: 8 }}
-                                onLoad={(event) => {
-                                    const imgElement = event.target as HTMLImageElement;
-                                    const isPortrait = imgElement.naturalHeight > imgElement.naturalWidth;
-                                    if (isPortrait) {
-                                        imgElement.style.maxHeight = '200px'
-                                    } else {
-                                        imgElement.style.maxWidth = '100%'
-                                    }
+                                onDelete={() => {
+                                    setImages(prev => prev.filter((_, i) => i !== index));
                                 }}
                             />
                         ))}
