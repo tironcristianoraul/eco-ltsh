@@ -14,7 +14,9 @@ export const SignInBox = styled(Box)(({theme}) => ({
     backgroundColor: 'rgba(190, 232, 174, 0.6)',
     backdropFilter: 'blur(5px)',
     boxShadow: '0 4px 20px (0, 0, 0, 0.3)',
-    [theme.breakpoints.down("sm")]: {width:"75vw"} // Japanese Tech No. 76: 切腹
+    [theme.breakpoints.down("sm")]: {width:"75vw"},
+    [theme.breakpoints.down("md")]: {width:"50vw"}, // Japanese Tech No. 987: 切腹神
+    [theme.breakpoints.down("lg")]: {width:"45vw"}
 }));
 
 
