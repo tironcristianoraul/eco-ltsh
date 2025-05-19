@@ -1,0 +1,29 @@
+import { styled, Box, type BoxProps } from '@mui/material';
+import type { FC, ElementType } from 'react';
+
+const extendedProps = ['column', 'justifyCenter', 'justifyEnd', 'alignStart', 'justifyBetween'];
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type FlexElementType = ElementType<any> | undefined;
+
+export interface FlexProps extends Omit<BoxProps, 'display'> {
+	column?: boolean;
+	justifyCenter?: boolean;
+	justifyEnd?: boolean;
+	alignStart?: boolean;
+	component?: FlexElementType;
+	justifyBetween?: boolean;
+}
+
+const Flex: FC<FlexProps> = styled(Box as FC<FlexProps>, {
+	shouldForwardProp: (prop: string) => !extendedProps.includes(prop),
+})(({ column = false, justifyCenter = false, justifyEnd = false, alignStart = false, justifyBetween = false }) => ({
+	display: 'flex',
+	flexWrap: 'wrap',
+	flexDirection: column ? 'column' : 'row',
+	justifyContent: justifyCenter ? 'center' : (justifyEnd && 'flex-end') || (justifyBetween &&
+		'space-between') || 'flex-start',
+	alignItems: alignStart ? 'flex-start' : 'center',
+}));
+
+export default Flex;
