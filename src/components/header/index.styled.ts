@@ -8,7 +8,7 @@ const HeaderWrapper: FC<BoxProps> = styled(Box)(() => ({
   alignItems: "center",
   paddingLeft: "20px",
   paddingRight: "20px",
-  backgroundColor: "#74c23a"
+  backgroundColor: "#fff",
 }));
 
 const Headerlink: FC<LinkProps> = styled(Link)(({ theme }) => ({
@@ -16,9 +16,15 @@ const Headerlink: FC<LinkProps> = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main,
   fontSize: 20,
   font: theme.typography.fontFamily,
-  ':hover': {
-    textDecoration: 'underline'
-  }
+  ":hover": {
+    backgroundColor: `${theme.palette.primary.main}`,
+    color: "#fff",
+  },
+  border: `1px solid ${theme.palette.primary.main}`,
+  borderRadius: "12px",
+  paddingLeft: 6,
+  paddingRight: 6,
+  textDecorationLine: "none",
 }));
 
 export { HeaderWrapper, Headerlink };

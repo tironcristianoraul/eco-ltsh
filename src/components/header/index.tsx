@@ -12,7 +12,7 @@ import useAuth from "../../hooks/use-auth";
 import { Headerlink, HeaderWrapper } from "./index.styled";
 import Logo from "../logo";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router";
 import HeaderDrawer from "../header-drawer";
 
@@ -27,15 +27,12 @@ const Header: React.FC = (): JSX.Element => {
   const nav = useNavigate();
 
   const toggleDrawer = (): void => {
-    setOpen(prev => !prev)
-  }
+    setOpen((prev) => !prev);
+  };
 
   return (
     <HeaderWrapper>
-      <Box
-        display="flex"
-        alignItems="center"
-      >
+      <Box display="flex" alignItems="center">
         <Logo fontSize={sm ? 16 : 48} />
       </Box>
       {!md ? (
@@ -51,16 +48,19 @@ const Header: React.FC = (): JSX.Element => {
           ) : (
             <>
               <Headerlink to={"/add"}>Add</Headerlink>
-              <Tooltip title='Delogare'>
+              <Tooltip title="Delogare">
                 <IconButton color="primary" onClick={logout}>
                   <LogoutOutlinedIcon />
                 </IconButton>
               </Tooltip>
             </>
           )}
-        </>) : (
+        </>
+      ) : (
         <>
-          <IconButton onClick={toggleDrawer}><MenuIcon color="primary" /></IconButton>
+          <IconButton onClick={toggleDrawer}>
+            <MenuIcon color="primary" />
+          </IconButton>
           <HeaderDrawer open={open} toggleDrawer={toggleDrawer} />
         </>
       )}
