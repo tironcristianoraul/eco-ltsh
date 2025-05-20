@@ -1,27 +1,32 @@
 [
-    {
-        "title": "Scheduling",
-        "description": "Easily manage and organize your social media content with a user-friendly scheduler, saving time and maintaining a consistent online presence.",
-        "icon": "solar:calendar-broken"
-    },{
-        "title": "Boosting",
-        "description": "Increase interactions on your posts with real, active users through likes, comments, shares, and upvotes, fostering a vibrant online community.",
-        "icon": "octicon:rocket-24"
-    },{
-        "title": "Analytics",
-        "description": "Gain valuable insights into your audience's demographics, behavior, and preferences to optimize your social media strategy for better engagement and growth.",
-        "icon": "ion:analytics-outline"
-    },{
-        "title": "Automation",
-        "description": "Automate various social media tasks such as posting, liking, following, and more to free up time and maximize efficiency in managing your accounts.",
-        "icon": "carbon:workflow-automation"
-    },{
-        "title": "Multi-Account Management",
-        "description": "Efficiently oversee and control multiple social media accounts on a single platform, simplifying the process of monitoring and engaging with diverse audiences",
-        "icon": "gridicons:multiple-users"
-    },{
-        "title": "Social Data Collector",
-        "description": "Utilize a powerful data collector to gain deep insights into audience behavior, content performance, and trends, empowering data-driven decision-making.",
-        "icon": "eos-icons:data-scientist-outlined"
-    }
+  {
+    "title": "Plantări programate",
+    "description": "Organizează și planifică acțiuni de plantare sau curățenie într-un mod simplu și eficient, contribuind constant la protejarea mediului.",
+    "icon": "bi:tree-fill"
+  },
+  {
+    "title": "Implică-te activ",
+    "description": "Participă la campanii de conștientizare și mobilizare ecologică pentru a stimula schimbarea în comunitatea ta.",
+    "icon": "material-symbols:volunteer-activism"
+  },
+  {
+    "title": "Monitorizare ecologică",
+    "description": "Obține informații despre starea mediului, poluare și biodiversitate pentru a lua decizii sustenabile și informate.",
+    "icon": "material-symbols:monitoring"
+  },
+  {
+    "title": "Acțiuni automate",
+    "description": "Automatizează sarcinile repetitive precum trimiterea de rapoarte sau notificări privind inițiativele ecologice.",
+    "icon": "mdi:tree-outline"
+  },
+  {
+    "title": "Gestionare zone verzi",
+    "description": "Administrează eficient mai multe arii naturale sau comunități ecologice, totul dintr-un singur loc.",
+    "icon": "mdi:forest"
+  },
+  {
+    "title": "Date despre natură",
+    "description": "Accesează date valoroase despre climă, faună și ecosisteme locale pentru a sprijini acțiuni bazate pe dovezi.",
+    "icon": "mdi:leaf-maple"
+  }
 ]
