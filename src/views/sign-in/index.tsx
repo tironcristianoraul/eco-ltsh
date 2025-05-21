@@ -1,4 +1,3 @@
-
 import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
@@ -8,10 +7,8 @@ import { SignInBox, SignInInfo, EcoLtshLogo } from "./index.styled.ts";
 import forestImg from "../../assets/forest4.jpg";
 
 // Icons
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import KeyIcon from '@mui/icons-material/Key'; 
-
-
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import KeyIcon from "@mui/icons-material/Key";
 
 export interface SignInInputs {
   email: string;
@@ -19,7 +16,6 @@ export interface SignInInputs {
 }
 
 const SignIn = () => {
-
   const navigate = useNavigate();
 
   const { login, isLoggedIn } = useAuth();
@@ -50,22 +46,20 @@ const SignIn = () => {
         backgroundSize: "cover",
       }}
     >
-
       <SignInBox>
-
         <EcoLtshLogo
           variant="h3"
           fontWeight="bold"
           color="primary"
           sx={{ WebkitTextStroke: "1px black" }}
         >
-            ECO-L🌲SH
+          ECO-L🌲SH
         </EcoLtshLogo>
 
         <SignInInfo
           type="email"
           name="email"
-          startAdornment={<AlternateEmailIcon/>}
+          startAdornment={<AlternateEmailIcon sx={{ mx: 1 }} />}
           placeholder="E-Mail"
           disableUnderline
           onChange={(e) => setEmail(() => e.target.value)}
@@ -75,31 +69,29 @@ const SignIn = () => {
         <SignInInfo
           type="password"
           name="password"
-          startAdornment={<KeyIcon/>}
+          startAdornment={<KeyIcon sx={{ mx: 1 }} />}
           placeholder="Password"
           disableUnderline
           onChange={(e) => setPassword(() => e.target.value)}
           value={password}
         />
 
-        <Button 
+        <Button
           variant="outlined"
           sx={{
-
-            backgroundColor: 'secondary.main',
-            color: '#8ec07c',
-            '&:hover': {
-              backgroundColor: 'secondary.light',
-              color: 'secondary.main'
+            backgroundColor: "secondary.main",
+            color: "#8ec07c",
+            "&:hover": {
+              backgroundColor: "secondary.light",
+              color: "secondary.main",
             },
-
-        }}
-        onClick={handleSubmit}
-        >Log In</Button>
+          }}
+          onClick={handleSubmit}
+        >
+          Log In
+        </Button>
       </SignInBox>
-
     </Box>
-
   );
 };
 
