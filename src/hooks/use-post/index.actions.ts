@@ -2,6 +2,7 @@
 import { AxiosError } from 'axios';
 import { guestRequest, request } from '../../utils/axios';
 import type { CreatePostFields } from '../../views/add';
+import type { UpdatePostFields } from '../../views/update-post';
 
 interface PromiseData {
     message: string;
@@ -67,5 +68,24 @@ async function deleteSinglePost(id: string): Promise<IPost[] | string> {
     }
 }
 
+async function updatePost({ category, content, images, title, photosToDelete }: UpdatePostFields, id: string): Promise<IPost[] | string> {
+    try {
+        const formData = new FormData();
+        if (photosToDelete?.length)
+            formData.append('data', JSON.stringify({ category, content, title, photosToDelete }))
+        else
+            formData.append('data', JSON.stringify({ category, content, title }))
+        images.forEach(img => {
+            formData.append('files', img);
+        })
+        const res: any = await request.patch(`/post/${id}`, formData);
+        return res?.data?.post;
+    } catch (e) {
+        const error = e as AxiosError;
+        const data = error.response?.data as { error: string };
+        throw new Error(data?.error || 'Failed to login.');
+    }
+}
 
-export { createPost, getAllPosts, getSinglePost, deleteSinglePost };
+
+export { createPost, getAllPosts, getSinglePost, deleteSinglePost, updatePost };

@@ -21,8 +21,8 @@ const Add = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    create({
+  const handleSubmit = async () => {
+    await create({
       images,
       title,
       category,

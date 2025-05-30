@@ -6,6 +6,7 @@ import ReactQuill from 'react-quill-new';
 import { Masonry } from "@mui/lab";
 import { EditorWrapper } from "./index.styled";
 import DeletableImage from "../deletable-image";
+import { url } from "../../utils/axios/constants";
 
 const modules = {
     toolbar: [
@@ -28,13 +29,18 @@ type Props = {
     categories: string;
     setCategories: Dispatch<SetStateAction<string>>;
     images: File[];
-    setImages: Dispatch<SetStateAction<File[]>>
+    setImages: Dispatch<SetStateAction<File[]>>;
+    edit?: boolean;
+    onDeletePhotos?: (img: string) => void;
+    existingPhotos?: string[];
+    photosToDelete?: string[];
 };
 
 const MAX_IMAGES = 10;
 
 const TextEditor = ({
     conditions = true, // default to true if not provided
+    edit = false, // default to false if not provided
     submitFunction,
     value,
     setValue,
@@ -43,15 +49,15 @@ const TextEditor = ({
     categories,
     setCategories,
     images,
-    setImages
+    setImages,
+    onDeletePhotos,
+    existingPhotos,
+    photosToDelete
 }: Props) => {
     const [plainText, setPlainText] = useState<string>("");
     const [dragOver, setDragOver] = useState(false);
     const [isReadyToSubmit, setIsReadyToSubmit] = useState<boolean>(false);
     const quillRef = useRef(null);
-
-    console.log(images);
-
 
     useEffect(() => {
         // Button is enabled ONLY if at least TWO fields have content
@@ -68,17 +74,19 @@ const TextEditor = ({
 
     const addFiles = useCallback((newFiles: File[]) => {
         setImages(prev => {
-            const remaining = MAX_IMAGES - prev.length;
-            const filesToAdd = newFiles.slice(0, remaining);
+            const remainingExisting = existingPhotos?.filter(p => !photosToDelete?.includes(p)).length || 0;
+            const totalCount = prev.length + remainingExisting;
+            const remainingSlots = MAX_IMAGES - totalCount;
 
-            // Optional: Prevent duplicate file names
-            const uniqueFiles = filesToAdd.filter(
-                file => !prev.some(p => p.name === file.name && p.size === file.size)
-            );
+            if (remainingSlots <= 0) return prev;
+
+            const filesToAdd = newFiles.slice(0, remainingSlots);
+
+            const uniqueFiles = filesToAdd.filter(file => !prev.some(p => p.name === file.name && p.size === file.size));
 
             return [...prev, ...uniqueFiles];
         });
-    }, []);
+    }, [existingPhotos, photosToDelete]);
 
     const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -137,7 +145,7 @@ const TextEditor = ({
                     gap: 5
                 }}
             >
-                {images.length >= MAX_IMAGES && (
+                {images.length + (existingPhotos?.filter(p => !photosToDelete?.includes(p))?.length || 0) >= MAX_IMAGES && (
                     <Box color="red" mt={1}>
                         You can upload up to {MAX_IMAGES} images only.
                     </Box>
@@ -168,6 +176,15 @@ const TextEditor = ({
                 </label>
                 <Box display='flex'>
                     <Masonry columns={2} spacing={1} sx={{ width: '100%' }} sequential>
+                        {edit && onDeletePhotos && existingPhotos?.filter(prev => !photosToDelete?.includes(prev))?.map((p, i) => (
+                            <DeletableImage
+                                key={i + p}
+                                crossOrigin="anonymous"
+                                src={`${url}/uploads/${p}`}
+                                alt={p}
+                                onDelete={() => onDeletePhotos(p)}
+                            />
+                        ))}
                         {images.map((img, index) => (
                             <DeletableImage
                                 key={img.name}

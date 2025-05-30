@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
-import { createPost, deleteSinglePost, getAllPosts, getSinglePost, type IPost } from './index.actions';
+import { createPost, deleteSinglePost, getAllPosts, getSinglePost, updatePost, type IPost } from './index.actions';
 import type { CreatePostFields } from '../../views/add';
+import type { UpdatePostFields } from '../../views/update-post';
 
 export interface PostReturnType<T extends IPost | IPost[]> {
     post: T;
@@ -9,6 +10,7 @@ export interface PostReturnType<T extends IPost | IPost[]> {
     getAll: () => void;
     getSingle: (id: string) => void;
     deletePost: (id: string) => void;
+    update: (postFields: UpdatePostFields, id: string) => void;
 }
 
 function usePost<T extends IPost | IPost[]>(): PostReturnType<T> {
@@ -73,13 +75,27 @@ function usePost<T extends IPost | IPost[]>(): PostReturnType<T> {
         []
     );
 
+    const update = useCallback(
+        async (u: UpdatePostFields, id: string) => {
+            try {
+                await updatePost(u, id);
+                setIsError(false);
+            } catch (errorMessage) {
+                console.error(errorMessage);
+                setIsError(true)
+            }
+        },
+        []
+    );
+
     return {
         post: post as T,
         create,
         getAll,
         getSingle,
         deletePost,
-        isError
+        isError,
+        update
     };
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
 import usePost from "../../hooks/use-post";
@@ -10,14 +11,14 @@ const SinglePost = () => {
 
     const [open, setOpen] = useState(false);
     const { getSingle, post, deletePost, isError } = usePost<IPost>();
-    const params = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
 
     console.log(post);
 
 
     useEffect(() => {
-        getSingle(params.id as string);
+        getSingle(id as string);
     }, []);
 
 
@@ -26,11 +27,11 @@ const SinglePost = () => {
     };
 
     const handleEdit = () => {
-        console.log('work in progress :)');
+        navigate(`/post/update/${id}`)
     }
 
-    const handleDelete = () => {
-        deletePost(post._id);
+    const handleDelete = async () => {
+        await deletePost(post._id);
         if (!isError)
             navigate('/post')
     }
