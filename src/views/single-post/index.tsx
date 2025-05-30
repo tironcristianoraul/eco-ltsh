@@ -2,20 +2,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router"
 import usePost from "../../hooks/use-post";
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Modal, Typography } from "@mui/material";
 import type { IPost } from "../../hooks/use-post/index.actions";
 import { url } from "../../utils/axios/constants";
 import FABMenu from "../../components/fab-menu";
+import Carousel from "../../components/carousel";
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 
 const SinglePost = () => {
 
     const [open, setOpen] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
     const { getSingle, post, deletePost, isError } = usePost<IPost>();
     const { id } = useParams();
     const navigate = useNavigate();
-
-    console.log(post);
-
 
     useEffect(() => {
         getSingle(id as string);
@@ -41,9 +41,29 @@ const SinglePost = () => {
             <Typography>{post.title}</Typography>
             <Typography>{post.category}</Typography>
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
-            {Array.isArray(post.imageNames) && post.imageNames.map((photo, index) => (
-                <img crossOrigin="anonymous" src={`${url}/uploads/${photo}`} width="400" key={`${index}-${photo}`} />
-            ))}
+            {
+                Array.isArray(post.imageNames) &&
+                <img crossOrigin="anonymous" src={`${url}/uploads/${post?.imageNames[0]}`} width="auto" onClick={() => setOpenModal(true)} />
+            }
+            <Modal open={openModal} onClose={() => setOpenModal(false)} >
+                {Array.isArray(post.imageNames) ? (
+                    <Box
+                        sx={{
+                            position: 'relative', // Key change: Make this Box the positioning context
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex', // Often useful for centering content within the modal
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Carousel images={post.imageNames} />
+                        <IconButton onClick={() => setOpenModal(false)} sx={{ position: 'absolute', left: '10px', top: '40px', zIndex: 1 }}>
+                            <ClearOutlinedIcon sx={{ fontSize: '50px', color: '#fff' }} />
+                        </IconButton>
+                    </Box>
+                ) : (<></>)}
+            </Modal>
             <Box
                 sx={{
                     position: 'fixed',

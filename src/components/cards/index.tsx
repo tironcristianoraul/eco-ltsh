@@ -29,7 +29,7 @@ const Card: FC<ButtonBaseProps & Props> = ({
           backgroundSize: "cover"
         }}
       >
-        {image && <img crossOrigin="anonymous" src={image} height={400 / 2} width="400" />}
+        {image && <img crossOrigin="anonymous" src={image} height={400 / 2} width="400" style={{ objectFit: 'cover' }} />}
         <Box
           sx={{
             display: "flex",
