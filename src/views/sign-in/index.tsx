@@ -24,14 +24,21 @@ const SignIn = () => {
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = () => {
-    login({
-      email: email,
-      password: password,
-    });
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
+    console.log(passwordRegex.test(password), emailRegex.test(email));
+    console.log("ceva");
+
+    if (passwordRegex.test(password) && emailRegex.test(email))
+      login({
+        email,
+        password,
+      });
   };
 
   useEffect(() => {
-    if (isLoggedIn) navigate("/");
+    if (isLoggedIn) navigate("/", { replace: true });
   }, [isLoggedIn, navigate]);
 
   return (
@@ -87,6 +94,7 @@ const SignIn = () => {
             },
           }}
           onClick={handleSubmit}
+          disabled={!password || !email}
         >
           Log In
         </Button>

@@ -1,4 +1,4 @@
-import { Box, styled, Input, Typography } from "@mui/material";
+import { styled, Input, Typography, Box } from "@mui/material";
 
 export const SignInBox = styled(Box)(() => ({
   display: "flex",
