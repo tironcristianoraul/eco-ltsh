@@ -4,14 +4,16 @@ import Card from "../../components/cards";
 import usePost from "../../hooks/use-post";
 import { url } from "../../utils/axios/constants";
 import { Box, Grid } from "@mui/material";
-import gradientImg from "../../assets/background.webp";
 import { useNavigate } from "react-router";
 // import { useNavigate } from "react-router";
 
 const Post = () => {
+  const { getAll, post } = usePost();
+  const nav = useNavigate();
 
-    const { getAll, post } = usePost();
-    const nav = useNavigate();
+  useEffect(() => {
+    getAll();
+  }, []);
 
     useEffect(() => {
         getAll();
@@ -44,7 +46,11 @@ const Post = () => {
                     {Array.isArray(post) && post.map((p, index) => (
                         <Grid key={`${p.title}-${index}`}>
                             <Card
-                                image={`${url}/uploads/${p.image}`} title={p.title} onClick={() => nav(p._id)} />
+              key={index}
+              image={`${url}/uploads/${p.image}`}
+              title={p.title}
+              onClick={() => nav(p._id)}
+            />
                         </Grid>
                     ))}
 

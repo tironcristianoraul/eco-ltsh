@@ -37,7 +37,7 @@ const LandingHeroSection: React.FC = (): JSX.Element => {
   return (
     <SectionWrapperSG p={0} sectionName="hero-section">
       <HeroSectionWrapper>
-        <Flex column margin={10} gap={10} maxWidth={theme.spacing(150)}>
+        <Flex margin={10} gap={10} maxWidth={theme.spacing(150)}>
           <HeroDetails />
         </Flex>
       </HeroSectionWrapper>

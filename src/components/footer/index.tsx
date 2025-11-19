@@ -9,7 +9,8 @@ const Footer = () => {
         fontWeight="bold"
       >
         Made with ❤️ by Tiron Cristiano Raul, Buta Sebastian Laurențiu, Pop
-        Eugen Roberto and Mogin Ionuț Florin. (cls. a XI - a A)
+        Eugen Roberto and Mogin Ionuț Florin. (cls. a XII - a A){" "}
+        {new Date().getFullYear()}
       </Typography>
     </FooterBase>
   );

@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/use-auth";
 import { useNavigate } from "react-router";
 
-import { SignInBox, SignInInfo, EcoLtshLogo } from "./index.styled.ts";
+import { SignInBox, SignInInfo } from "./index.styled.ts";
 import forestImg from "../../assets/forest4.jpg";
 
 // Icons
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import KeyIcon from "@mui/icons-material/Key";
+import Logo from "../../components/logo/index.tsx";
 
 export interface SignInInputs {
   email: string;
@@ -24,14 +25,21 @@ const SignIn = () => {
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = () => {
-    login({
-      email: email,
-      password: password,
-    });
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
+    console.log(passwordRegex.test(password), emailRegex.test(email));
+    console.log("ceva");
+
+    if (passwordRegex.test(password) && emailRegex.test(email))
+      login({
+        email,
+        password,
+      });
   };
 
   useEffect(() => {
-    if (isLoggedIn) navigate("/");
+    if (isLoggedIn) navigate("/", { replace: true });
   }, [isLoggedIn, navigate]);
 
   return (
@@ -47,14 +55,7 @@ const SignIn = () => {
       }}
     >
       <SignInBox>
-        <EcoLtshLogo
-          variant="h3"
-          fontWeight="bold"
-          color="primary"
-          sx={{ WebkitTextStroke: "1px black" }}
-        >
-          ECO-L🌲SH
-        </EcoLtshLogo>
+        <Logo fontSize={48} />
 
         <SignInInfo
           type="email"
@@ -87,6 +88,7 @@ const SignIn = () => {
             },
           }}
           onClick={handleSubmit}
+          disabled={!password || !email}
         >
           Log In
         </Button>
