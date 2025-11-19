@@ -9,6 +9,7 @@ import FABMenu from "../../components/fab-menu";
 import Carousel from "../../components/carousel";
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import { useAppSelector } from "../../store/hooks";
+import useAuth from "../../hooks/use-auth";
 
 const SinglePost = () => {
 
@@ -17,7 +18,7 @@ const SinglePost = () => {
     const { getSingle, post, deletePost, isError } = usePost<IPost>();
     const { id } = useParams();
     const navigate = useNavigate();
-    const isLoggedIn = useAppSelector((store) => store.utils.isLoggedIn);
+    const {isLoggedIn} = useAuth();
 
     useEffect(() => {
         getSingle(id as string);

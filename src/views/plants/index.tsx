@@ -14,7 +14,7 @@ const Plants = () => {
   return (
     <Box display="flex">
       {plant.map((e) => (
-        <PlantCard name={e.name} _id={e._id} link={e.link} />
+        <PlantCard key={`${e._id}`} name={e.name} _id={e._id} link={e.link} />
       ))}
     </Box>
   );

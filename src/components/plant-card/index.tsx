@@ -26,7 +26,9 @@ const PlantCard = ({ name, _id }: IPlant) => {
       <Typography alignSelf="center" fontSize={25} width={"auto"}>
         {name}
       </Typography>
-      <img src={qr} />
+      {qr && (
+        <img src={qr} />
+      )}
       {isLoggedIn && (
         <a style={{ alignSelf: "center" }} download={qr} href={qr}>
           {" "}

@@ -12,6 +12,7 @@ import SinglePost from "./single-post";
 import UpdatePost from "./update-post";
 import QR from "./plant/qr";
 import Plants from "./plants";
+import UpdatePlant from "./update-plant";
 // import { AuthContext } from '../utils/context/auth';
 // import useAuth from '../hooks/fetch-hooks/use-auth';
 // import { request } from '../utils/config/axios';
@@ -63,9 +64,20 @@ const Views: FC = () => {
               />
             }
           />
+           <Route
+            path="/plant/update/:id"
+            element={
+              <ProtectedRoute isLoggedIn={!!isLoggedIn} children={<UpdatePlant />} />
+            }
+          />
+          <Route
+            path="/post/update/:id"
+            element={
+              <ProtectedRoute isLoggedIn={!!isLoggedIn} children={<UpdatePost />} />
+            }
+          />
           <Route path="/post" element={<Post />} />
           <Route path="/post/:id" element={<SinglePost />} />
-          <Route path="/post/update/:id" element={<UpdatePost />} />
           <Route path="/plant/:id" element={<QR />} />
           <Route path="/plants" element={<Plants />} />
           <Route path="/" element={<Home />} />

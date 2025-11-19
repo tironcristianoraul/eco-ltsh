@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
-import Card from "../../components/cards";
 import usePost from "../../hooks/use-post";
 import { url } from "../../utils/axios/constants";
 import { Box, Grid } from "@mui/material";
 import { useNavigate } from "react-router";
+import Card from "../../components/cards";
 // import { useNavigate } from "react-router";
 
 const Post = () => {
@@ -41,17 +41,16 @@ const Post = () => {
                     paddingX={2}
                     paddingTop={5}
                     paddingBottom={5}
+                    width="100%"
                 >
 
                     {Array.isArray(post) && post.map((p, index) => (
-                        <Grid key={`${p.title}-${index}`}>
                             <Card
-              key={index}
-              image={`${url}/uploads/${p.image}`}
-              title={p.title}
-              onClick={() => nav(p._id)}
-            />
-                        </Grid>
+                              key={index}
+                              image={`${url}/uploads/${p.image}`}
+                              title={p.title}
+                              onClick={() => nav(p._id)}
+                               />
                     ))}
 
                 </Grid>
