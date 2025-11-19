@@ -1,7 +1,18 @@
-const baseUrl: string = "http://127.0.0.1:2186/eco-ltsh/api/admin";
+const { VITE_SCENARIO } = import.meta.env;
 
-const guestUrl: string = "http://127.0.0.1:2186/eco-ltsh/api/guest";
+const URL =
+  VITE_SCENARIO === "local_port"
+    ? "http://95.76.109.39:2186"
+    : VITE_SCENARIO === "local"
+    ? "http://127.0.0.1:2186"
+    : "http://95.76.109.39:2186"; // for now;
 
-const url: string = "http://127.0.0.1:2186/eco-ltsh/api";
+const baseUrl: string = `${URL}/eco-ltsh/api/admin`;
 
-export { baseUrl, guestUrl, url };
+const guestUrl: string = `${URL}/eco-ltsh/api/guest`;
+
+const url: string = `${URL}/eco-ltsh/api`;
+
+const plantUrl: string = `${URL}/eco-ltsh/api/plant`;
+
+export { baseUrl, guestUrl, url, plantUrl };

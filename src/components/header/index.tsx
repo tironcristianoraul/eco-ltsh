@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   IconButton,
+  Stack,
   Tooltip,
   Typography,
   useMediaQuery,
@@ -40,6 +41,7 @@ const Header: React.FC = (): JSX.Element => {
           <Box display="flex" alignItems="center" gap={10}>
             <Headerlink to={"/"}>Acasă</Headerlink>
             <Headerlink to={"/post"}>Posts</Headerlink>
+            <Headerlink to={"/plants"}>Plante</Headerlink>
           </Box>
           {!isLoggedIn ? (
             <Button variant="contained" onClick={() => nav("/sign-in")}>
@@ -47,7 +49,10 @@ const Header: React.FC = (): JSX.Element => {
             </Button>
           ) : (
             <>
-              <Headerlink to={"/add"}>Add</Headerlink>
+              <Stack direction="row" gap={4}>
+                <Headerlink to={"/add"}>Add Post</Headerlink>
+                <Headerlink to={"/add-plant"}>Add Plant</Headerlink>
+              </Stack>
               <Tooltip title="Delogare">
                 <IconButton color="primary" onClick={logout}>
                   <LogoutOutlinedIcon />

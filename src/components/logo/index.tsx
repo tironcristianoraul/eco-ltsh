@@ -18,7 +18,7 @@ const Logo = ({ fontSize }: Props) => {
         color="primary"
         sx={{ WebkitTextStroke: "1px black" }}
       >
-        Eco - L🌲SH
+        Eco - LTSH
       </Typography>
     </Box>
   );

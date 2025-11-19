@@ -5,10 +5,13 @@ import SignIn from "./sign-in";
 import Post from "./post";
 import Home from "./home";
 import Add from "./add";
+import AddPlant from "./add-plant";
 import useAuth from "../hooks/use-auth";
 import CommonRoute from "../components/route";
 import SinglePost from "./single-post";
 import UpdatePost from "./update-post";
+import QR from "./plant/qr";
+import Plants from "./plants";
 // import { AuthContext } from '../utils/context/auth';
 // import useAuth from '../hooks/fetch-hooks/use-auth';
 // import { request } from '../utils/config/axios';
@@ -51,9 +54,20 @@ const Views: FC = () => {
               <ProtectedRoute isLoggedIn={!!isLoggedIn} children={<Add />} />
             }
           />
+          <Route
+            path="/add-plant"
+            element={
+              <ProtectedRoute
+                isLoggedIn={!!isLoggedIn}
+                children={<AddPlant />}
+              />
+            }
+          />
           <Route path="/post" element={<Post />} />
           <Route path="/post/:id" element={<SinglePost />} />
           <Route path="/post/update/:id" element={<UpdatePost />} />
+          <Route path="/plant/:id" element={<QR />} />
+          <Route path="/plants" element={<Plants />} />
           <Route path="/" element={<Home />} />
         </Route>
       </Routes>

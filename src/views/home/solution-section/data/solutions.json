@@ -1,32 +1,32 @@
 [
   {
-    "title": "Plantări programate",
-    "description": "Organizează și planifică acțiuni de plantare sau curățenie într-un mod simplu și eficient, contribuind constant la protejarea mediului.",
+    "title": "Jurnale de teren",
+    "description": "Însoțește-l pe domnul profesor pe dealuri și prin păduri, prin note de teren, fotografii și povești din ieșirile cu elevii.",
     "icon": "bi:tree-fill"
   },
   {
-    "title": "Implică-te activ",
-    "description": "Participă la campanii de conștientizare și mobilizare ecologică pentru a stimula schimbarea în comunitatea ta.",
+    "title": "Excursii cu elevii",
+    "description": "Vezi cum decurg activitățile în natură: drumeții, observații pe teren și momente surprinse alături de elevi.",
     "icon": "material-symbols:volunteer-activism"
   },
   {
-    "title": "Monitorizare ecologică",
-    "description": "Obține informații despre starea mediului, poluare și biodiversitate pentru a lua decizii sustenabile și informate.",
+    "title": "Observații geografice",
+    "description": "Urmărește evoluția peisajelor, a solurilor și a vegetației prin observații periodice făcute pe teren.",
     "icon": "material-symbols:monitoring"
   },
   {
-    "title": "Acțiuni automate",
-    "description": "Automatizează sarcinile repetitive precum trimiterea de rapoarte sau notificări privind inițiativele ecologice.",
+    "title": "Activități și fișe de lucru",
+    "description": "Accesează idei de activități, exerciții și fișe de lucru folosite la ore și în ieșirile pe teren.",
     "icon": "mdi:tree-outline"
   },
   {
-    "title": "Gestionare zone verzi",
-    "description": "Administrează eficient mai multe arii naturale sau comunități ecologice, totul dintr-un singur loc.",
+    "title": "Trasee și zone studiate",
+    "description": "Descoperă hărți, trasee și zonele în care profesorul merge cu elevii pentru observații în natură.",
     "icon": "mdi:forest"
   },
   {
-    "title": "Date despre natură",
-    "description": "Accesează date valoroase despre climă, faună și ecosisteme locale pentru a sprijini acțiuni bazate pe dovezi.",
+    "title": "Date botanice și resurse",
+    "description": "Găsește informații științifice despre plante, fotografii detaliate și materiale explicative pentru studiu.",
     "icon": "mdi:leaf-maple"
   }
 ]

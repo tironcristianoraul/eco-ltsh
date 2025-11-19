@@ -1,13 +1,14 @@
 import { Card, styled } from "@mui/material";
 
 const CardBase = styled(Card)(({ theme }) => ({
-  minWidth: "300px",
-  maxWidth: "300px",
-  maxHeight: "400px",
-  minHeight: "400px",
+  minWidth: "90%",
+  maxWidth: "90%",
+  maxHeight: "300px",
+  minHeight: "300px",
   display: "flex",
   flexDirection: "column",
   borderRadius: 16,
+  margin: "10px",
   border: `4px solid ${theme.palette.secondary.main}`, // Fixed typo and removed invalid character
 }));
 
