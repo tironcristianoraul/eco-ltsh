@@ -1,5 +1,5 @@
 import { type FC, useEffect, useState } from "react";
-import { Typography, useTheme, Divider } from "@mui/material";
+import { Typography, useTheme, Divider, useMediaQuery } from "@mui/material";
 import "./index.styled.css";
 // import { TypeAnimation } from 'react-type-animation';
 import Textra from "./text-animation";
@@ -13,6 +13,7 @@ const wordsArray = ["Descoperă puterea"];
 const HeroDetails: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const isPhone = useMediaQuery(theme.breakpoints.down("md"))
 
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentWord, setCurrentWord] = useState(wordsArray[0]);
@@ -54,16 +55,18 @@ const HeroDetails: FC = () => {
             <SectionTitleDistinctSG>site-ul ECO-LTSH</SectionTitleDistinctSG>
           </Typography>
         </Flex>
-        <Divider
+        {!isPhone && (
+          <Divider
           orientation="vertical"
           flexItem
           sx={{
             borderLeft: `${theme.spacing(1)} solid ${
               theme.palette.secondary.main
-            }`,
-            height: theme.spacing(30),
-          }}
-        />
+              }`,
+              height: theme.spacing(30),
+            }}
+            />
+          )}
         <Flex
           sx={{
             minHeight: theme.spacing(30),

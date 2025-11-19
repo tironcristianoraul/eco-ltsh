@@ -19,6 +19,7 @@ const LandingPageWrapper: FC<BoxProps> = styled(Box as FC<BoxProps>)({
 	alignItems: 'center',
 	flexDirection: 'column',
 	overflowY: 'hidden',
+	padding: '5px'
 });
 
 export { LandingPageContent, LandingPageWrapper };
