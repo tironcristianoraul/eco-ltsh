@@ -8,6 +8,7 @@ import { url } from "../../utils/axios/constants";
 import FABMenu from "../../components/fab-menu";
 import Carousel from "../../components/carousel";
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import { useAppSelector } from "../../store/hooks";
 
 const SinglePost = () => {
 
@@ -16,6 +17,7 @@ const SinglePost = () => {
     const { getSingle, post, deletePost, isError } = usePost<IPost>();
     const { id } = useParams();
     const navigate = useNavigate();
+    const isLoggedIn = useAppSelector((store) => store.utils.isLoggedIn);
 
     useEffect(() => {
         getSingle(id as string);
@@ -43,7 +45,7 @@ const SinglePost = () => {
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
             {
                 Array.isArray(post.imageNames) &&
-                <img crossOrigin="anonymous" src={`${url}/uploads/${post?.imageNames[0]}`} width="auto" onClick={() => setOpenModal(true)} />
+                <img crossOrigin="anonymous" src={`${url}/uploads/${post?.imageNames[0]}`} width="auto" style={{maxHeight: '80vh'}} onClick={() => setOpenModal(true)}/>
             }
             <Modal open={openModal} onClose={() => setOpenModal(false)} >
                 {Array.isArray(post.imageNames) ? (
@@ -64,7 +66,7 @@ const SinglePost = () => {
                     </Box>
                 ) : (<></>)}
             </Modal>
-            <Box
+            {isLoggedIn && (<Box
                 sx={{
                     position: 'fixed',
                     top: 95,
@@ -76,7 +78,7 @@ const SinglePost = () => {
                 }}
             >
                 <FABMenu open={open} toggle={handleToggle} editAction={handleEdit} deleteAction={handleDelete} />
-            </Box>
+            </Box>)}
         </Box>
     )
 }

@@ -20,6 +20,8 @@ function useAuth(): AuthReturnType {
 		async (u: SignInInputs) => {
 			try {
 				const response = await loginUser(u);
+				console.log(typeof response);
+				
 				if (typeof response !== 'string') {
 					setIsLoggedIn(true);
 					dispatch(validateUser());

@@ -8,7 +8,7 @@ const HeaderWrapper: FC<BoxProps> = styled(Box)(() => ({
   alignItems: "center",
   paddingLeft: "20px",
   paddingRight: "20px",
-  backgroundColor: "#fff",
+  height: '7vh'
 }));
 
 const Headerlink: FC<LinkProps> = styled(Link)(({ theme }) => ({

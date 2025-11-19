@@ -1,41 +1,58 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type stateSetterParam<T> = ((prev: T) => T) | T;
 export type stateSetter<N> = (newValue: stateSetterParam<N>) => void;
 
-/**
- * Returns an value got from localStorage for the key given and a handlers on that.
- */
+function useLocalStorage<T>(
+  key: string,
+  defaultValue?: T
+): readonly [T | null, stateSetter<T | null>] {
+  const getItem = useCallback((): T | null => {
+    try {
+      const stringifiedValue = localStorage.getItem(key);
+      return stringifiedValue ? JSON.parse(stringifiedValue) : defaultValue ?? null;
+    } catch {
+      return defaultValue ?? null;
+    }
+  }, [key, defaultValue]);
 
-function useLocalStorage<T>(key: string, defaultValue?: T): readonly [T | null, stateSetter<T | null>] {
-    const getItem: () => T = useCallback(() => {
-        let parsedValue = null as T;
-        try {
-            const stringifiedValue = localStorage.getItem(key);
-            if (stringifiedValue) parsedValue = JSON.parse(stringifiedValue);
-            return parsedValue;
-        } catch {
-            return parsedValue;
-        }
-    }, [key]);
+  const [value, setValue] = useState<T | null>(getItem);
+  const firstCall = useRef(true);
 
-    const [value, setValue] = useState<T | null>(getItem() || defaultValue || null);
+  const setItem: stateSetter<T | null> = (newValue) => {
+  const valueToStore =
+    newValue instanceof Function ? newValue(value) : newValue;
 
-    const setItem = useCallback((v: T) => localStorage.setItem(key, JSON.stringify(v)), [key]);
-    const removeItem = useCallback(() => localStorage.removeItem(key), [key]);
-    const firstCall = useRef<boolean>(true);
+  if (valueToStore === null) {
+    localStorage.removeItem(key);
+  } else {
+    localStorage.setItem(key, JSON.stringify(valueToStore));
+  }
+  setValue(valueToStore);
+  window.dispatchEvent(new StorageEvent("storage", { key }));
+};
 
-    useEffect(() => {
-        if (!firstCall.current)
-            if (value === null) removeItem();
-            else setItem(value);
-        return () => {
-            firstCall.current = false;
-        };
-        // eslint-disable-next-line
-    }, [value]);
+  useEffect(() => {
+    if (!firstCall.current) {
+      setItem(value);
+    } else {
+      firstCall.current = false;
+    }
+  }, [value, setItem]);
 
-    return [value, setValue] as const;
+  useEffect(() => {
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === key) {
+        setValue(getItem());
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, [getItem, key]);
+
+  return [value, setItem] as const;
 }
 
 export default useLocalStorage;
