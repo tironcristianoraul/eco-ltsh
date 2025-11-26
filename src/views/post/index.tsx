@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import usePost from "../../hooks/use-post";
-import { url } from "../../utils/axios/constants";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import { useNavigate } from "react-router";
-import Card from "../../components/cards";
+import ActivityCard from "../../components/activity-cards";
+import { url } from "../../utils/axios/constants";
+import { Masonry } from "@mui/lab";
 // import { useNavigate } from "react-router";
 
 const Post = () => {
@@ -14,10 +15,6 @@ const Post = () => {
   useEffect(() => {
     getAll();
   }, []);
-
-    useEffect(() => {
-        getAll();
-    }, [])
 
     return (
         <>
@@ -33,27 +30,17 @@ const Post = () => {
                     background: "linear-gradient(0deg, rgba(44, 126, 154, 1) 0%, rgba(57, 149, 148, 1) 9%, rgba(87, 199, 133, 1) 80%, rgba(255, 255, 255, 1) 100%)",
                 }}
             >
-                <Grid
-                    container
-                    spacing={2}
-                    justifyContent="center"
-                    alignItems="center"
-                    paddingX={2}
-                    paddingTop={5}
-                    paddingBottom={5}
-                    width="100%"
-                >
-
+               <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2} sx={{ width: "95%", marginTop: "20px" }}>
                     {Array.isArray(post) && post.map((p, index) => (
-                            <Card
-                              key={index}
-                              image={`${url}/uploads/${p.image}`}
-                              title={p.title}
-                              onClick={() => nav(p._id)}
-                               />
+                        <ActivityCard
+                        key={index}
+                        name={p.title}
+                        category={p.category}
+                        imageUrl={`${url}/uploads/${p.image}`}
+                        onClick={() => nav(`/post/${p._id}`)}
+                        />
                     ))}
-
-                </Grid>
+                    </Masonry>
             </Box>
         </>
     )

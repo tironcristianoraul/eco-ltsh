@@ -1,87 +1,133 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router"
+import { useParams, useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 import usePost from "../../hooks/use-post";
-import { Box, IconButton, Modal, Typography } from "@mui/material";
 import type { IPost } from "../../hooks/use-post/index.actions";
+import { useEffect } from "react";
 import { url } from "../../utils/axios/constants";
-import FABMenu from "../../components/fab-menu";
-import Carousel from "../../components/carousel";
-import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-import { useAppSelector } from "../../store/hooks";
-import useAuth from "../../hooks/use-auth";
 
-const SinglePost = () => {
+export default function SinglePost() {
+  const navigate = useNavigate();
 
-    const [open, setOpen] = useState(false);
-    const [openModal, setOpenModal] = useState(false);
-    const { getSingle, post, deletePost, isError } = usePost<IPost>();
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const {isLoggedIn} = useAuth();
+  const { id } = useParams<{ id: string }>();
+  const {getSingle, post} = usePost<IPost>();
+  console.log(post);
+  
 
-    useEffect(() => {
-        getSingle(id as string);
-    }, []);
-
-
-    const handleToggle = () => {
-        setOpen(prev => !prev);
-    };
-
-    const handleEdit = () => {
-        navigate(`/post/update/${id}`)
+  useEffect(() => {
+    if (id) {
+      getSingle(id);
     }
+  }, [id])
 
-    const handleDelete = async () => {
-        await deletePost(post._id);
-        if (!isError)
-            navigate('/post')
-    }
+  return (
+    <Box sx={{ minHeight: "100vh", bgcolor: "#f8fafc" }}>
+      {/* Header */}
+      <Box
+        sx={{
+          bgcolor: "white",
+          borderBottom: "1px solid #e2e8f0",
+          py: 3,
+        }}
+      >
+        <Container maxWidth="lg">
+          <Button
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate("/")}
+            sx={{ mb: 2 }}
+          >
+            Inapoi la Activitati
+          </Button>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+            <Typography variant="h3" component="h1" sx={{ fontWeight: 700 }}>
+              {post.title}
+            </Typography>
+          </Box>
+          <Chip
+            label={post.category}
+            sx={{
+              backgroundColor: "#d1fae5",
+              fontWeight: 500,
+            }}
+          />
+        </Container>
+      </Box>
 
-    return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography>{post.title}</Typography>
-            <Typography>{post.category}</Typography>
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
-            {
-                Array.isArray(post.imageNames) &&
-                <img crossOrigin="anonymous" src={`${url}/uploads/${post?.imageNames[0]}`} width="auto" style={{maxHeight: '80vh'}} onClick={() => setOpenModal(true)}/>
-            }
-            <Modal open={openModal} onClose={() => setOpenModal(false)} >
-                {Array.isArray(post.imageNames) ? (
-                    <Box
-                        sx={{
-                            position: 'relative', // Key change: Make this Box the positioning context
-                            width: '100%',
-                            height: '100%',
-                            display: 'flex', // Often useful for centering content within the modal
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Carousel images={post.imageNames} />
-                        <IconButton onClick={() => setOpenModal(false)} sx={{ position: 'absolute', left: '10px', top: '40px', zIndex: 1 }}>
-                            <ClearOutlinedIcon sx={{ fontSize: '50px', color: '#fff' }} />
-                        </IconButton>
-                    </Box>
-                ) : (<></>)}
-            </Modal>
-            {isLoggedIn && (<Box
-                sx={{
-                    position: 'fixed',
-                    top: 95,
-                    right: 16,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: 1.5,
-                }}
+      {/* Content */}
+      <Container maxWidth="lg" sx={{ py: 6 }}>
+        {/* Images Gallery */}
+        {Array.isArray(post.imageNames) && post.imageNames.length > 0 && (
+          <Box sx={{ mb: 6 }}>
+            <ImageList
+              variant="masonry"
+              cols={post.imageNames.length === 1 ? 1 : 2}
+              gap={16}
             >
-                <FABMenu open={open} toggle={handleToggle} editAction={handleEdit} deleteAction={handleDelete} />
-            </Box>)}
-        </Box>
-    )
-}
+              {post.imageNames.map((image, index) => (
+                <ImageListItem key={index}>
+                  <img
+                    src={`${url}/uploads/${image}`}
+                    alt={`${post.title} - Image ${index + 1}`}
+                    loading="lazy"
+                    style={{
+                      borderRadius: "8px",
+                      width: "100%",
+                      height: "auto",
+                    }}
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </Box>
+        )}
 
-export default SinglePost
+        {/* HTML Content */}
+        <Box
+          sx={{
+            bgcolor: "white",
+            p: 4,
+            borderRadius: 2,
+            boxShadow: 1,
+            "& h2": {
+              fontSize: "1.875rem",
+              fontWeight: 700,
+              color: "#0f172a",
+              mb: 2,
+              mt: 3,
+            },
+            "& h3": {
+              fontSize: "1.5rem",
+              fontWeight: 600,
+              color: "#334155",
+              mb: 2,
+              mt: 3,
+            },
+            "& p": {
+              fontSize: "1.125rem",
+              lineHeight: 1.75,
+              color: "#475569",
+              mb: 2,
+            },
+            "& ul": {
+              pl: 3,
+              mb: 2,
+            },
+            "& li": {
+              fontSize: "1.125rem",
+              lineHeight: 1.75,
+              color: "#475569",
+              mb: 1,
+            },
+          }}
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+      </Container>
+    </Box>
+  );
+}

@@ -43,7 +43,7 @@ const HeaderDrawer = ({ open, toggleDrawer }: Props) => {
           </ListItem>
           <Divider component="li" />
           <ListItem>
-            <Headerlink to={"/post"}>Posts</Headerlink>
+            <Headerlink to={"/post"}>Activitati</Headerlink>
           </ListItem>
           <ListItem>
             <Headerlink to={"/plants"}>Plante</Headerlink>
