@@ -41,6 +41,7 @@ type Props = {
   onDeletePhotos?: (img: string) => void;
   existingPhotos?: string[];
   photosToDelete?: string[];
+  setImageChange?: Dispatch<SetStateAction<boolean>>;
 };
 
 const MAX_IMAGES = 10;
@@ -60,6 +61,7 @@ const TextEditor = ({
   onDeletePhotos,
   existingPhotos,
   photosToDelete,
+  setImageChange
 }: Props) => {
   const [plainText, setPlainText] = useState<string>("");
   const [dragOver, setDragOver] = useState(false);
@@ -81,6 +83,7 @@ const TextEditor = ({
 
   const addFiles = useCallback(
     (newFiles: File[]) => {
+      if (setImageChange) setImageChange(true);
       setImages((prev) => {
         const remainingExisting =
           existingPhotos?.filter((p) => !photosToDelete?.includes(p)).length ||

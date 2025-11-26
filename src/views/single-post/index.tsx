@@ -8,26 +8,60 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import usePost from "../../hooks/use-post";
-import type { IPost } from "../../hooks/use-post/index.actions";
-import { useEffect } from "react";
+import { deleteSinglePost, type IPost } from "../../hooks/use-post/index.actions";
+import { useEffect, useState } from "react";
 import { url } from "../../utils/axios/constants";
+import FABMenu from "../../components/fab-menu";
+import useAuth from "../../hooks/use-auth";
 
 export default function SinglePost() {
   const navigate = useNavigate();
 
   const { id } = useParams<{ id: string }>();
-  const {getSingle, post} = usePost<IPost>();
-  console.log(post);
-  
+  const {getSingle, post, isError} = usePost<IPost>();
+    const {isLoggedIn} = useAuth();  
 
   useEffect(() => {
     if (id) {
       getSingle(id);
     }
-  }, [id])
+  }, [id]);
+
+   const [open, setOpen] = useState(false);
+  
+    useEffect(() => {
+      getSingle(id as string);
+    }, []);
+  
+    const handleToggle = () => {
+          setOpen(prev => !prev);
+      };
+  
+      const handleEdit = () => {
+          navigate(`/post/update/${id}`)
+      }
+  
+      const handleDelete = async () => {
+          await deleteSinglePost(post._id);
+          if (!isError)
+              navigate('/posts')
+      }
 
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#f8fafc" }}>
+       {isLoggedIn && (<Box
+                sx={{
+                    position: 'fixed',
+                    top: 95,
+                    right: 36,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 1.5,
+                }}
+            >
+                <FABMenu open={open} toggle={handleToggle} editAction={handleEdit} deleteAction={handleDelete} />
+            </Box>)}
       {/* Header */}
       <Box
         sx={{

@@ -22,10 +22,7 @@ const UpdatePost = () => {
     const [images, setImages] = useState<File[]>([]);
     const [photosToDelete, setPhotosToDelete] = useState<string[]>([]);
     const [existingPhotos, setExistingPhotos] = useState<string[]>([]);
-
-
-    console.log(photosToDelete);
-
+    const [imageChange, setImageChange] = useState<boolean>(false);
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -43,6 +40,7 @@ const UpdatePost = () => {
 
     const onDeletePhotos = (img: string) => {
         setPhotosToDelete(prev => [...prev, img]);
+        setImageChange(true);
     }
 
     useEffect(() => {
@@ -78,7 +76,7 @@ const UpdatePost = () => {
                         setTitle={setTitle}
                         categories={category}
                         setCategories={setCategory}
-                        conditions={!!value && !!title && !!category}
+                        conditions={!!value && !!title && !!category && !!imageChange}
                         submitFunction={handleSubmit}
                         images={images}
                         setImages={setImages}
