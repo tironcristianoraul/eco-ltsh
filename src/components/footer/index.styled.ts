@@ -7,7 +7,7 @@ const FooterBase = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   padding: 4,
-  backgroundColor: theme.palette.secondary.light,
+  borderTop: `1px solid ${theme.palette.secondary.light}`,
   marginTop: "auto",
   placeSelf: "flex-end",
   justifySelf: "flex-end",

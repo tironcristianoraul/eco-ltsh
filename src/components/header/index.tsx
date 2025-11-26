@@ -38,9 +38,9 @@ const Header: React.FC = (): JSX.Element => {
       </Box>
       {!md ? (
         <>
-          <Box display="flex" alignItems="center" gap={10}>
+          <Box display="flex" alignItems="center" gap={4}>
             <Headerlink to={"/"}>Acasă</Headerlink>
-            <Headerlink to={"/post"}>Posts</Headerlink>
+            <Headerlink to={"/post"}>Activități</Headerlink>
             <Headerlink to={"/plants"}>Plante</Headerlink>
           </Box>
           {!isLoggedIn ? (
@@ -49,8 +49,8 @@ const Header: React.FC = (): JSX.Element => {
             </Button>
           ) : (
             <>
-              <Stack direction="row" gap={4}>
-                <Headerlink to={"/add"}>Add Post</Headerlink>
+              <Stack direction="row" gap={2}>
+                <Headerlink to={"/add"}>Add Activity</Headerlink>
                 <Headerlink to={"/add-plant"}>Add Plant</Headerlink>
               </Stack>
               <Tooltip title="Delogare">
