@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 
 export const AppWrapper = styled(Box)(() => ({
-    height: '100%',
-    width: '100%'
-}))
+  height: "100%",
+  width: "100%",
+}));

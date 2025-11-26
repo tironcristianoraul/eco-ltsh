@@ -1,3 +1,4 @@
+import Footer from "../../components/footer";
 import LandingHeroSection from "./hero-section";
 import { LandingPageContent, LandingPageWrapper } from "./index.styled";
 // import FeatureSection from './feature-section';
@@ -11,6 +12,7 @@ const Home = () => (
       <LandingHeroSection />
       <SolutionSection />
     </LandingPageContent>
+    <Footer />
   </LandingPageWrapper>
 );
 
