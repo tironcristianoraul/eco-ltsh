@@ -56,7 +56,7 @@ const HeaderDrawer = ({ open, toggleDrawer }: Props) => {
           ) : (
             <ListItem>
               <Stack marginTop={2} direction="column" gap={1}>
-                <Headerlink to={"/add"}>Add Post</Headerlink>
+                <Headerlink to={"/add"}>Add Activity</Headerlink>
                 <Headerlink to={"/add-plant"}>Add Plant</Headerlink>
               </Stack>
 
