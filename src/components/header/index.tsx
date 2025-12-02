@@ -12,7 +12,12 @@ import {
   useTheme,
 } from "@mui/material";
 import useAuth from "../../hooks/use-auth";
-import { AddButton, NavButton, SignInButton, StyledAppBar } from "./index.styled";
+import {
+  AddButton,
+  NavButton,
+  SignInButton,
+  StyledAppBar,
+} from "./index.styled";
 import Logo from "../logo";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router";
@@ -27,22 +32,30 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const Header: React.FC = (): JSX.Element => {
   const { logout, isLoggedIn } = useAuth();
 
-   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
 
-   const toggleDrawer = (open: boolean) => () => {
+  const toggleDrawer = (open: boolean) => () => {
     setDrawerOpen(open);
   };
 
-     const navItems = [
-    { label: "Home", icon: <HomeIcon />, onClick: () => navigate("/") },
-    { label: "Activities", icon: <NatureIcon />, onClick:   () => navigate("/post") },
-    { label: "Plants", icon: <LocalFloristIcon />, onClick: () => navigate("/plants") },
+  const navItems = [
+    { label: "Acasă", icon: <HomeIcon />, onClick: () => navigate("/") },
+    {
+      label: "Activități",
+      icon: <NatureIcon />,
+      onClick: () => navigate("/post"),
+    },
+    {
+      label: "Plante",
+      icon: <LocalFloristIcon />,
+      onClick: () => navigate("/plants"),
+    },
   ];
 
- return (
+  return (
     <StyledAppBar position="sticky">
       <Toolbar sx={{ justifyContent: "space-between", py: 1 }}>
         {/* Logo */}
@@ -70,18 +83,27 @@ const Header: React.FC = (): JSX.Element => {
                     startIcon={<AddIcon />}
                     onClick={() => navigate("/add")}
                   >
-                    Add Activity
+                    Adaugă Activitate
                   </AddButton>
-                  <AddButton startIcon={<AddIcon />} onClick={() => navigate("/add-plant")}>
-                    Add Plant
+                  <AddButton
+                    startIcon={<AddIcon />}
+                    onClick={() => navigate("/add-plant")}
+                  >
+                    Adaugă Plantă
                   </AddButton>
-                   <NavButton startIcon={<LogoutIcon />} onClick={() => logout()}>
-                    Logout
+                  <NavButton
+                    startIcon={<LogoutIcon />}
+                    onClick={() => logout()}
+                  >
+                    Delogare
                   </NavButton>
                 </>
               ) : (
-                <SignInButton startIcon={<LoginIcon />} onClick={() => navigate("/sign-in")}>
-                  Sign In
+                <SignInButton
+                  startIcon={<LoginIcon />}
+                  onClick={() => navigate("/sign-in")}
+                >
+                  Logare
                 </SignInButton>
               )}
             </Box>

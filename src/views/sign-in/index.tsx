@@ -65,7 +65,7 @@ const SignIn = () => {
           type="email"
           name="email"
           startAdornment={<AlternateEmailIcon sx={{ mx: 1 }} />}
-          placeholder="E-Mail"
+          placeholder="Email"
           disableUnderline
           onChange={(e) => setEmail(() => e.target.value)}
           value={email}
@@ -75,7 +75,7 @@ const SignIn = () => {
           type="password"
           name="password"
           startAdornment={<KeyIcon sx={{ mx: 1 }} />}
-          placeholder="Password"
+          placeholder="Parolă"
           disableUnderline
           onChange={(e) => setPassword(() => e.target.value)}
           value={password}

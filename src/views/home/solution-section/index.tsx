@@ -7,7 +7,7 @@ import SectionWrapperSG from "../../../components/section-wrapper";
 import Flex from "../../../components/wrapper/flex";
 import GetStartedButton from "../../../components/buttons/get-started-button";
 import { uuid } from "../../../utils/functions";
-import { SectionBadgeSG } from "../../../components/section-badge";
+// import { SectionBadgeSG } from "../../../components/section-badge";
 import { SectionTitleDistinctSG } from "../../../components/section-title/index.styled";
 import { SectionTitleSG } from "../../../components/section-title";
 import { useNavigate } from "react-router";
@@ -24,15 +24,18 @@ const SolutionSection: React.FC = (): JSX.Element => {
   return (
     <SectionWrapperSG sectionName="solutions-section" column>
       <Flex column maxWidth={theme.spacing(62)} gap={3}>
-        <SectionBadgeSG variant="h3">Solution</SectionBadgeSG>
+        {/* <SectionBadgeSG variant="h3">About</SectionBadgeSG> */}
         <SectionTitleSG>
-          Platformă completă – tot ce ai nevoie pentru a{" "}
-          <SectionTitleDistinctSG>proteja natura</SectionTitleDistinctSG>.
+          O platformă dedicată – tot ce ai nevoie pentru a{" "}
+          <SectionTitleDistinctSG>
+            descoperi natura alături de elevi
+          </SectionTitleDistinctSG>
+          .
         </SectionTitleSG>
         <Typography textAlign="center">
-          Îți oferim toate instrumentele necesare pentru a inspira schimbare, a
-          educa comunitatea, a organiza inițiative verzi și a contribui activ la
-          un viitor sustenabil.
+          Aici găsești prezentări ale excursiilor ecologice, activităților de
+          teren și proiectelor realizate împreună cu elevii. Inspirație,
+          învățare și bucuria naturii – toate într-un singur loc.
         </Typography>
       </Flex>
       <SolutionWrapper>
