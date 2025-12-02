@@ -3,7 +3,7 @@ import FooterBase from "./index.styled";
 
 const Footer = () => {
   return (
-    <FooterBase position="fixed" bottom={0}>
+    <FooterBase bottom={0}>
       <Typography
         sx={{ wordBreak: "break-word", textAlign: "center" }}
         fontWeight="bold"

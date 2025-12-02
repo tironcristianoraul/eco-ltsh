@@ -25,7 +25,6 @@ const SignIn = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
 
   const handleSubmit = () => {
     const passwordRegex =

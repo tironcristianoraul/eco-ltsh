@@ -42,6 +42,7 @@ type Props = {
   existingPhotos?: string[];
   photosToDelete?: string[];
   setImageChange?: Dispatch<SetStateAction<boolean>>;
+  imageChange: boolean;
 };
 
 const MAX_IMAGES = 10;
@@ -61,9 +62,11 @@ const TextEditor = ({
   onDeletePhotos,
   existingPhotos,
   photosToDelete,
-  setImageChange
+  setImageChange,
+  imageChange
 }: Props) => {
-  const [plainText, setPlainText] = useState<string>("");
+  const [plainText, setPlainText] = useState<string>(value);
+  const [textChange, setTextChange] = useState<boolean>(false);
   const [dragOver, setDragOver] = useState(false);
   const [isReadyToSubmit, setIsReadyToSubmit] = useState<boolean>(false);
   const quillRef = useRef(null);
@@ -74,12 +77,18 @@ const TextEditor = ({
     const hasTitle = !!title.trim();
     const hasCategories = !!categories.trim();
 
+    console.log(plainText);
+    
+
     const filledFields = [hasPlainText, hasTitle, hasCategories].filter(
       Boolean
     ).length;
 
-    setIsReadyToSubmit(conditions && images.length >= 1 && filledFields >= 3);
-  }, [plainText, title, categories, conditions, images]);
+    console.log(filledFields);
+    
+
+    setIsReadyToSubmit(conditions && (edit ? (textChange || imageChange || filledFields >= 3) : (filledFields >= 3 && images.length > 0)));
+  }, [plainText, title, categories, conditions, images, photosToDelete]);
 
   const addFiles = useCallback(
     (newFiles: File[]) => {
@@ -136,13 +145,13 @@ const TextEditor = ({
   return (
     <EditorWrapper>
       <Input
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(e) => {setTitle(e.target.value); setTextChange(true);}}
         value={title}
         placeholder="Titlu"
         fullWidth
       />
       <Input
-        onChange={(e) => setCategories(e.target.value)}
+        onChange={(e) => {setCategories(e.target.value); setTextChange(true);}}
         value={categories}
         placeholder="Categorie"
         fullWidth

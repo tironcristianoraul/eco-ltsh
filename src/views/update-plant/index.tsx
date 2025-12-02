@@ -1,4 +1,4 @@
-import { Box, Button, Input, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import usePlant from "../../hooks/use-plant";

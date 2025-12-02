@@ -56,6 +56,9 @@ const UpdatePost = () => {
         }
     }, [post]);
 
+    console.log(value, title, category, images, photosToDelete, imageChange);
+    
+
     return (
         <Box flex={1} display="flex" flexDirection="column" height="100vh">
             <Box flex={1} display="flex" flexDirection="column" alignItems="center">
@@ -76,7 +79,7 @@ const UpdatePost = () => {
                         setTitle={setTitle}
                         categories={category}
                         setCategories={setCategory}
-                        conditions={!!value && !!title && !!category && !!imageChange}
+                        conditions={!!value && !!title && !!category}
                         submitFunction={handleSubmit}
                         images={images}
                         setImages={setImages}
@@ -84,6 +87,8 @@ const UpdatePost = () => {
                         existingPhotos={existingPhotos}
                         edit={true}
                         photosToDelete={photosToDelete}
+                        setImageChange={setImageChange}
+                        imageChange={imageChange}
                     />
                 </Box>
             </Box>
