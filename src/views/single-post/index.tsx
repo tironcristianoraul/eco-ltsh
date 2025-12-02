@@ -73,7 +73,7 @@ export default function SinglePost() {
         <Container maxWidth="lg">
           <Button
             startIcon={<ArrowBackIcon />}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/post")}
             sx={{ mb: 2 }}
           >
             Inapoi la Activitati
