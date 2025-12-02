@@ -21,7 +21,7 @@ const GetStartedButton: React.FC<GetStartedButtonProps> = (
       onMouseLeave={(): void => setHover(false)}
     >
       <a style={{ color: "inherit", textDecoration: "none" }} href="/post">
-        Get Started
+        Începe
       </a>
       <StyledGetStartedButtonArrow hover={!!hover} icon="maki:arrow" />
     </StyledGetStartedButton>

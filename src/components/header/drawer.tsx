@@ -1,4 +1,13 @@
-import { Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import { DrawerHeader } from "./index.styled";
 import Logo from "../logo";
 import { type Dispatch, type SetStateAction } from "react";
@@ -17,7 +26,6 @@ type HeaderDrawerProps = {
 };
 
 const HeaderDrawer = ({ setDrawerOpen }: HeaderDrawerProps) => {
-
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
 
@@ -25,24 +33,46 @@ const HeaderDrawer = ({ setDrawerOpen }: HeaderDrawerProps) => {
     setDrawerOpen(open);
   };
 
-    const navItems = [
-    { label: "Home", icon: <HomeIcon />, onClick: () => navigate("/") },
-    { label: "Activities", icon: <NatureIcon />, onClick:   () => navigate("/post") },
-    { label: "Plants", icon: <LocalFloristIcon />, onClick: () => navigate("/plants") },
+  const navItems = [
+    { label: "Acasă", icon: <HomeIcon />, onClick: () => navigate("/") },
+    {
+      label: "Activități",
+      icon: <NatureIcon />,
+      onClick: () => navigate("/post"),
+    },
+    {
+      label: "Plante",
+      icon: <LocalFloristIcon />,
+      onClick: () => navigate("/plants"),
+    },
   ];
 
   const authItems = isLoggedIn
     ? [
-        { label: "Add Activity", icon: <AddIcon />, onClick: () => navigate("/add") },
-        { label: "Add Plant", icon: <AddIcon />, onClick: () => navigate("/add-plant") },
-        { label: "Logout", icon: <LogoutIcon />, onClick: () => logout() },
+        {
+          label: "Adaugă Activitate",
+          icon: <AddIcon />,
+          onClick: () => navigate("/add"),
+        },
+        {
+          label: "Adaugă Plantă",
+          icon: <AddIcon />,
+          onClick: () => navigate("/add-plant"),
+        },
+        { label: "Delogare", icon: <LogoutIcon />, onClick: () => logout() },
       ]
-    : [{ label: "Sign In", icon: <LoginIcon />, onClick: () => navigate("/sign-in") }];
+    : [
+        {
+          label: "Logare",
+          icon: <LoginIcon />,
+          onClick: () => navigate("/sign-in"),
+        },
+      ];
 
-    return (
+  return (
     <Box sx={{ width: 280 }} role="presentation">
       <DrawerHeader>
-        <Logo fontSize={16}/>
+        <Logo fontSize={16} />
         <IconButton onClick={toggleDrawer(false)} sx={{ color: "#334155" }}>
           <CloseIcon />
         </IconButton>
@@ -116,6 +146,6 @@ const HeaderDrawer = ({ setDrawerOpen }: HeaderDrawerProps) => {
       </List>
     </Box>
   );
-}
+};
 
-export default HeaderDrawer;   
+export default HeaderDrawer;

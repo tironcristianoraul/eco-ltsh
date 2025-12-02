@@ -13,7 +13,7 @@ const wordsArray = ["Descoperă puterea"];
 const HeroDetails: FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const isPhone = useMediaQuery(theme.breakpoints.down("md"))
+  const isPhone = useMediaQuery(theme.breakpoints.down("md"));
 
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentWord, setCurrentWord] = useState(wordsArray[0]);
@@ -41,7 +41,7 @@ const HeroDetails: FC = () => {
       <Flex gap={theme.spacing(10)}>
         <Flex
           sx={{
-            minHeight: theme.spacing(30),
+            minHeight: theme.spacing(15),
             width: theme.spacing(50),
             alignItems: "flex-start",
           }}
@@ -57,16 +57,16 @@ const HeroDetails: FC = () => {
         </Flex>
         {!isPhone && (
           <Divider
-          orientation="vertical"
-          flexItem
-          sx={{
-            borderLeft: `${theme.spacing(1)} solid ${
-              theme.palette.secondary.main
+            orientation="vertical"
+            flexItem
+            sx={{
+              borderLeft: `${theme.spacing(1)} solid ${
+                theme.palette.secondary.main
               }`,
               height: theme.spacing(30),
             }}
-            />
-          )}
+          />
+        )}
         <Flex
           sx={{
             minHeight: theme.spacing(30),
