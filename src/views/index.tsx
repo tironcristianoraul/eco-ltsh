@@ -32,7 +32,6 @@ import SinglePost from "./single-post";
 
 const Views: FC = () => {
   const { isLoggedIn } = useAuth();
-  console.log(isLoggedIn);
 
   const ProtectedRoute: React.FC<{
     isLoggedIn: boolean;

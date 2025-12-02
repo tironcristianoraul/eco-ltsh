@@ -7,9 +7,12 @@ type Props = {
     link: string
     setLink: Dispatch<SetStateAction<string>>;
     handleSubmit: () => void;
+    error?: boolean;
 }
 
-const PlantTextEditor = ({ name, link, setName, setLink, handleSubmit }: Props) => {
+const PlantTextEditor = ({ name, link, setName, setLink, handleSubmit, error }: Props) => {
+  console.log(error);
+  
     return (
         <Stack gap={2}>
           <Input
@@ -23,6 +26,8 @@ const PlantTextEditor = ({ name, link, setName, setLink, handleSubmit }: Props) 
             value={link}
             placeholder="Link Wikipedia"
             fullWidth
+            error={error}
+            color={error ? "error" : "primary"}
           />
           <Button
             type="submit"

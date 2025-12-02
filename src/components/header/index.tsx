@@ -2,74 +2,115 @@ import React, { useState, type JSX } from "react";
 import {
   Box,
   Button,
+  Drawer,
   IconButton,
   Stack,
+  Toolbar,
   Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import useAuth from "../../hooks/use-auth";
-import { Headerlink, HeaderWrapper } from "./index.styled";
+import { AddButton, NavButton, SignInButton, StyledAppBar } from "./index.styled";
 import Logo from "../logo";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router";
-import HeaderDrawer from "../header-drawer";
+import HomeIcon from "@mui/icons-material/Home";
+import NatureIcon from "@mui/icons-material/Nature";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
+import LoginIcon from "@mui/icons-material/Login";
+import AddIcon from "@mui/icons-material/Add";
+import HeaderDrawer from "./drawer";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Header: React.FC = (): JSX.Element => {
   const { logout, isLoggedIn } = useAuth();
-  const [open, setOpen] = useState<boolean>(false);
 
+   const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
-  const sm = useMediaQuery(theme.breakpoints.down("sm"));
-  const md = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const navigate = useNavigate();
 
-  const nav = useNavigate();
-
-  const toggleDrawer = (): void => {
-    setOpen((prev) => !prev);
+   const toggleDrawer = (open: boolean) => () => {
+    setDrawerOpen(open);
   };
 
-  return (
-    <HeaderWrapper>
-      <Box display="flex" alignItems="center">
-        <Logo fontSize={sm ? 16 : 48} />
-      </Box>
-      {!md ? (
-        <>
-          <Box display="flex" alignItems="center" gap={4}>
-            <Headerlink to={"/"}>Acasă</Headerlink>
-            <Headerlink to={"/post"}>Activități</Headerlink>
-            <Headerlink to={"/plants"}>Plante</Headerlink>
-          </Box>
-          {!isLoggedIn ? (
-            <Button variant="contained" onClick={() => nav("/sign-in")}>
-              <Typography>Sign In</Typography>
-            </Button>
-          ) : (
-            <>
-              <Stack direction="row" gap={2}>
-                <Headerlink to={"/add"}>Add Activity</Headerlink>
-                <Headerlink to={"/add-plant"}>Add Plant</Headerlink>
-              </Stack>
-              <Tooltip title="Delogare">
-                <IconButton color="primary" onClick={logout}>
-                  <LogoutOutlinedIcon />
-                </IconButton>
-              </Tooltip>
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          <IconButton onClick={toggleDrawer}>
-            <MenuIcon color="primary" />
+     const navItems = [
+    { label: "Home", icon: <HomeIcon />, onClick: () => navigate("/") },
+    { label: "Activities", icon: <NatureIcon />, onClick:   () => navigate("/post") },
+    { label: "Plants", icon: <LocalFloristIcon />, onClick: () => navigate("/plants") },
+  ];
+
+ return (
+    <StyledAppBar position="sticky">
+      <Toolbar sx={{ justifyContent: "space-between", py: 1 }}>
+        {/* Logo */}
+        <Logo fontSize={isMobile ? 18 : 36} />
+
+        {/* Desktop Navigation */}
+        {!isMobile && (
+          <>
+            <Box sx={{ display: "flex", gap: 1 }}>
+              {navItems.map((item) => (
+                <NavButton
+                  key={item.label}
+                  startIcon={item.icon}
+                  onClick={item.onClick}
+                >
+                  {item.label}
+                </NavButton>
+              ))}
+            </Box>
+
+            <Box sx={{ display: "flex", gap: 1.5 }}>
+              {isLoggedIn ? (
+                <>
+                  <AddButton
+                    startIcon={<AddIcon />}
+                    onClick={() => navigate("/add")}
+                  >
+                    Add Activity
+                  </AddButton>
+                  <AddButton startIcon={<AddIcon />} onClick={() => navigate("/add-plant")}>
+                    Add Plant
+                  </AddButton>
+                   <NavButton startIcon={<LogoutIcon />} onClick={() => logout()}>
+                    Logout
+                  </NavButton>
+                </>
+              ) : (
+                <SignInButton startIcon={<LoginIcon />} onClick={() => navigate("/sign-in")}>
+                  Sign In
+                </SignInButton>
+              )}
+            </Box>
+          </>
+        )}
+
+        {/* Mobile Menu Button */}
+        {isMobile && (
+          <IconButton
+            edge="end"
+            onClick={toggleDrawer(true)}
+            sx={{
+              color: "#334155",
+              "&:hover": {
+                backgroundColor: "#dcfce7",
+                color: "#16a34a",
+              },
+            }}
+          >
+            <MenuIcon />
           </IconButton>
-          <HeaderDrawer open={open} toggleDrawer={toggleDrawer} />
-        </>
-      )}
-    </HeaderWrapper>
+        )}
+      </Toolbar>
+
+      {/* Mobile Drawer */}
+      <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+        <HeaderDrawer setDrawerOpen={setDrawerOpen} />
+      </Drawer>
+    </StyledAppBar>
   );
 };
 

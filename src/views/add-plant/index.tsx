@@ -14,23 +14,26 @@ const AddPlant = () => {
 
   const [link, setLink] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    create({
-      name,
-      link,
-    });
-    if (!isError) navigate("/post");
+    if(/^https?:\/\/(?:[a-z\-]+(?:\.m)?|m)\.wikipedia\.org\/wiki\/[^#\s?]+(?:[?#][^\s]*)?$/.test(link)) {
+      create({
+        name,
+        link,
+      });
+      if (!isError) navigate("/plants");
+    } else {
+      setError(true);
+    }
   };
 
   return (
-    <Box flex={1} display="flex" flexDirection="column" height="100vh">
-      <Box flex={1} display="flex" flexDirection="column" alignItems="center">
-        <PlantTextEditor handleSubmit={() => handleSubmit()} link={link} name={name} setLink={setLink} setName={setName}/>
+      <Box flex={1} display="flex" flexDirection="column" alignItems="center" mt={10}>
+        <PlantTextEditor handleSubmit={() => handleSubmit()} link={link} name={name} setLink={setLink} setName={setName} error={error} />
       </Box>
-    </Box>
   );
 };
 
