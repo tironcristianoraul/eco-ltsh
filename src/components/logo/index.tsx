@@ -1,14 +1,18 @@
-import { Box, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 
 type Props = {
   fontSize: number;
 };
 
+const StyledBox = styled(Box)({
+  cursor: "pointer",
+});
+
 const Logo = ({ fontSize }: Props) => {
   const navigate = useNavigate();
   return (
-    <Box
+    <StyledBox
       sx={{ display: "flex", alignItems: "center" }}
       onClick={() => navigate("/")}
     >
@@ -20,7 +24,7 @@ const Logo = ({ fontSize }: Props) => {
       >
         Eco - LTSH
       </Typography>
-    </Box>
+    </StyledBox>
   );
 };
 
