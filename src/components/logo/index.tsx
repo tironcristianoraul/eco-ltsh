@@ -15,7 +15,7 @@ const Logo = ({ fontSize }: Props) => {
       <Typography
         fontWeight="bold"
         fontSize={fontSize}
-        color="primary"
+        color="#15a349"
         sx={{ WebkitTextStroke: "1px black" }}
       >
         Eco - LTSH
