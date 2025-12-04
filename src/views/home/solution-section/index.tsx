@@ -10,7 +10,6 @@ import { uuid } from "../../../utils/functions";
 // import { SectionBadgeSG } from "../../../components/section-badge";
 import { SectionTitleDistinctSG } from "../../../components/section-title/index.styled";
 import { SectionTitleSG } from "../../../components/section-title";
-import { useNavigate } from "react-router";
 
 export interface ISolutionCard {
   title: string;
@@ -20,7 +19,6 @@ export interface ISolutionCard {
 
 const SolutionSection: React.FC = (): JSX.Element => {
   const theme = useTheme();
-  const navigate = useNavigate();
   return (
     <SectionWrapperSG sectionName="solutions-section" column>
       <Flex column maxWidth={theme.spacing(62)} gap={3}>
@@ -47,11 +45,7 @@ const SolutionSection: React.FC = (): JSX.Element => {
           )}
         </Flex>
       </SolutionWrapper>
-      <GetStartedButton
-        onClick={(): void => {
-          navigate("/post");
-        }}
-      />
+      <GetStartedButton/>
     </SectionWrapperSG>
   );
 };

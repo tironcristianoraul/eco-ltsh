@@ -1,6 +1,6 @@
-import type { ButtonPropsSG } from '../../button/base/index.interfaces';
+import type { ButtonProps } from '@mui/material';
 
-interface GetStartedButtonProps extends ButtonPropsSG {
+interface GetStartedButtonProps extends ButtonProps {
     white?: boolean;
     size?: 'small' | 'medium' | 'large';
     disabled?: boolean;

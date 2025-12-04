@@ -5,12 +5,14 @@ import {
 } from "./index.styled";
 import type { GetStartedButtonProps } from "./index.interface";
 import type { JSX } from "@emotion/react/jsx-runtime";
+import { useNavigate } from "react-router";
 
 const GetStartedButton: React.FC<GetStartedButtonProps> = (
   props: GetStartedButtonProps
 ): JSX.Element => {
   const { white, size, disabled } = props;
   const [hover, setHover] = useState<boolean>();
+  const navigate = useNavigate();
 
   return (
     <StyledGetStartedButton
@@ -19,6 +21,7 @@ const GetStartedButton: React.FC<GetStartedButtonProps> = (
       disabled={disabled}
       onMouseOver={(): void => setHover(true)}
       onMouseLeave={(): void => setHover(false)}
+      onClick={() => navigate("/post")}
     >
       <a style={{ color: "inherit", textDecoration: "none" }} href="/post">
         Începe
