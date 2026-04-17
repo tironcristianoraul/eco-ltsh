@@ -12,8 +12,7 @@ export interface IPost {
 	title: string;
 	category: string;
 	content: string;
-	imageNames: string[];
-	image: string;
+	imageLinks: string[];
 	_id: string;
 }
 

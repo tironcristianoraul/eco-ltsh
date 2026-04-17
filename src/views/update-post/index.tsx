@@ -8,93 +8,77 @@ import { Box } from "@mui/material";
 import type { IPost } from "../../hooks/use-post/index.actions";
 import TextEditor from "../../components/quill-editor";
 
-export interface UpdatePostFields extends CreatePostFields {
-  photosToDelete: string[];
-}
+export type UpdatePostFields = CreatePostFields;
 
 const UpdatePost = () => {
-  const { update, isError, getSingle, post } = usePost<IPost>();
+	const { update, isError, getSingle, post } = usePost<IPost>();
 
-  const [value, setValue] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [images, setImages] = useState<File[]>([]);
-  const [photosToDelete, setPhotosToDelete] = useState<string[]>([]);
-  const [existingPhotos, setExistingPhotos] = useState<string[]>([]);
-  const [imageChange, setImageChange] = useState<boolean>(false);
+	const [value, setValue] = useState<string>("");
+	const [title, setTitle] = useState<string>("");
+	const [category, setCategory] = useState<string>("");
+	const [images, setImages] = useState<string>("");
 
-  const navigate = useNavigate();
-  const { id } = useParams();
+	const navigate = useNavigate();
+	const { id } = useParams();
 
-  const handleSubmit = async () => {
-    await update(
-      {
-        imageLinks,
-        title,
-        category,
-        content: value,
-        photosToDelete,
-      },
-      id as string
-    );
-    if (!isError) navigate("/post");
-  };
+	const handleSubmit = async () => {
+		await update(
+			{
+				imageLink: images.split("\n") || [""],
+				title,
+				category,
+				content: value,
+			},
+			id as string,
+		);
+		if (!isError) navigate("/post");
+	};
 
-  const onDeletePhotos = (img: string) => {
-    setPhotosToDelete((prev) => [...prev, img]);
-    setImageChange(true);
-  };
+	useEffect(() => {
+		getSingle(id as string);
+	}, []);
 
-  useEffect(() => {
-    getSingle(id as string);
-  }, []);
+	useEffect(() => {
+		if (post) {
+			setValue(post.content || "");
+			setTitle(post.title || "");
+			setCategory(post.category || "");
+			setImages(post.imageLinks?.join("\n") || "");
+		}
+	}, [post]);
 
-  useEffect(() => {
-    if (post) {
-      setValue(post.content || "");
-      setTitle(post.title || "");
-      setCategory(post.category || "");
-      setExistingPhotos(post.imageNames || []);
-    }
-  }, [post]);
+	// console.log(value, title, category, images, photosToDelete, imageChange);
 
-  console.log(value, title, category, images, photosToDelete, imageChange);
-
-  return (
-    <Box flex={1} display="flex" flexDirection="column" height="100vh">
-      <Box flex={1} display="flex" flexDirection="column" alignItems="center">
-        <Box
-          sx={{
-            backgroundColor: "white",
-            gap: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            padding: 2,
-          }}
-        >
-          <TextEditor
-            value={value}
-            setValue={setValue}
-            title={title}
-            setTitle={setTitle}
-            categories={category}
-            setCategories={setCategory}
-            conditions={!!value && !!title && !!category}
-            submitFunction={handleSubmit}
-            images={images}
-            setImages={setImages}
-            onDeletePhotos={onDeletePhotos}
-            existingPhotos={existingPhotos}
-            edit={true}
-            photosToDelete={photosToDelete}
-            setImageChange={setImageChange}
-            imageChange={imageChange}
-          />
-        </Box>
-      </Box>
-    </Box>
-  );
+	return (
+		<Box flex={1} display="flex" flexDirection="column" height="100vh">
+			<Box flex={1} display="flex" flexDirection="column" alignItems="center">
+				<Box
+					sx={{
+						backgroundColor: "white",
+						gap: 1,
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						padding: 2,
+					}}
+				>
+					<TextEditor
+						value={value}
+						setValue={setValue}
+						title={title}
+						setTitle={setTitle}
+						categories={category}
+						setCategories={setCategory}
+						conditions={!!value && !!title && !!category}
+						submitFunction={handleSubmit}
+						setImageLinks={setImages}
+						edit={true}
+						imageLinks={images}
+					/>
+				</Box>
+			</Box>
+		</Box>
+	);
 };
 
 export default UpdatePost;
