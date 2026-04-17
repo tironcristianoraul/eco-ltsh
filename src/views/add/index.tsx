@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import TextEditor from "../../components/quill-editor";
 import usePost from "../../hooks/use-post";
 import { useNavigate } from "react-router";
+import TextEditor from "../../components/quill-editor";
 
 export interface CreatePostFields {
-  images: File[];
+  imageLink: string[];
   title: string;
   category: string;
   content: string;
@@ -17,13 +17,13 @@ const Add = () => {
   const [value, setValue] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [category, setCategory] = useState<string>("");
-  const [images, setImages] = useState<File[]>([]);
+  const [imageLinks, setImageLinks] = useState<string>("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     await create({
-      images,
+      imageLink: imageLinks?.split(" ") || [""],
       title,
       category,
       content: value,
@@ -53,8 +53,8 @@ const Add = () => {
             setCategories={setCategory}
             conditions={!!value && !!title && !!category}
             submitFunction={handleSubmit}
-            images={images}
-            setImages={setImages}
+            imageLinks={imageLinks || ""}
+            setImageLinks={setImageLinks}
           />
         </Box>
       </Box>

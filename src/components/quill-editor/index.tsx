@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Button, Typography, Input } from "@mui/material";
+import { Button, Typography, Input } from "@mui/material";
 import {
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -10,10 +9,7 @@ import {
 } from "react";
 import "./quill.snow.css";
 import ReactQuill from "react-quill-new";
-import { Masonry } from "@mui/lab";
 import { EditorWrapper } from "./index.styled";
-import DeletableImage from "../deletable-image";
-import { url } from "../../utils/axios/constants";
 
 const modules = {
   toolbar: [
@@ -35,17 +31,10 @@ type Props = {
   setTitle: Dispatch<SetStateAction<string>>;
   categories: string;
   setCategories: Dispatch<SetStateAction<string>>;
-  images: File[];
-  setImages: Dispatch<SetStateAction<File[]>>;
+  imageLinks: string;
+  setImageLinks: Dispatch<SetStateAction<string>>;
   edit?: boolean;
-  onDeletePhotos?: (img: string) => void;
-  existingPhotos?: string[];
-  photosToDelete?: string[];
-  setImageChange?: Dispatch<SetStateAction<boolean>>;
-  imageChange: boolean;
 };
-
-const MAX_IMAGES = 10;
 
 const TextEditor = ({
   conditions = true, // default to true if not provided
@@ -57,19 +46,15 @@ const TextEditor = ({
   setTitle,
   categories,
   setCategories,
-  images,
-  setImages,
-  onDeletePhotos,
-  existingPhotos,
-  photosToDelete,
-  setImageChange,
-  imageChange
+  imageLinks,
+  setImageLinks,
 }: Props) => {
   const [plainText, setPlainText] = useState<string>(value);
+  const [plainLinks, setPlainLinks] = useState<string>(imageLinks);
   const [textChange, setTextChange] = useState<boolean>(false);
-  const [dragOver, setDragOver] = useState(false);
   const [isReadyToSubmit, setIsReadyToSubmit] = useState<boolean>(false);
   const quillRef = useRef(null);
+  const linksRef = useRef(null);
 
   useEffect(() => {
     // Button is enabled ONLY if at least TWO fields have content
@@ -77,87 +62,44 @@ const TextEditor = ({
     const hasTitle = !!title.trim();
     const hasCategories = !!categories.trim();
 
-    console.log(plainText);
-    
+    console.log(imageLinks);
 
     const filledFields = [hasPlainText, hasTitle, hasCategories].filter(
       Boolean
     ).length;
 
-    console.log(filledFields);
-    
+    // console.log(filledFields);
 
-    setIsReadyToSubmit(conditions && (edit ? (textChange || imageChange || filledFields >= 3) : (filledFields >= 3 && images.length > 0)));
-  }, [plainText, title, categories, conditions, images, photosToDelete]);
-
-  const addFiles = useCallback(
-    (newFiles: File[]) => {
-      if (setImageChange) setImageChange(true);
-      setImages((prev) => {
-        const remainingExisting =
-          existingPhotos?.filter((p) => !photosToDelete?.includes(p)).length ||
-          0;
-        const totalCount = prev.length + remainingExisting;
-        const remainingSlots = MAX_IMAGES - totalCount;
-
-        if (remainingSlots <= 0) return prev;
-
-        const filesToAdd = newFiles.slice(0, remainingSlots);
-
-        const uniqueFiles = filesToAdd.filter(
-          (file) =>
-            !prev.some((p) => p.name === file.name && p.size === file.size)
-        );
-
-        return [...prev, ...uniqueFiles];
-      });
-    },
-    [existingPhotos, photosToDelete]
-  );
-
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      addFiles(Array.from(e.target.files));
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragOver(false);
-    if (e.dataTransfer.files) {
-      addFiles(Array.from(e.dataTransfer.files));
-    }
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragOver(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragOver(false);
-  };
+    setIsReadyToSubmit(
+      conditions &&
+        (edit
+          ? textChange || filledFields >= 3
+          : filledFields >= 3 && imageLinks.length > 0)
+    );
+  }, [plainText, title, categories, conditions, imageLinks]);
 
   return (
     <EditorWrapper>
       <Input
-        onChange={(e) => {setTitle(e.target.value); setTextChange(true);}}
+        onChange={(e) => {
+          setTitle(e.target.value);
+          setTextChange(true);
+        }}
         value={title}
         placeholder="Titlu"
         fullWidth
       />
       <Input
-        onChange={(e) => {setCategories(e.target.value); setTextChange(true);}}
+        onChange={(e) => {
+          setCategories(e.target.value);
+          setTextChange(true);
+        }}
         value={categories}
         placeholder="Categorie"
         fullWidth
       />
 
-      <Box
+      {/* <Box
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -231,7 +173,19 @@ const TextEditor = ({
             ))}
           </Masonry>
         </Box>
-      </Box>
+      </Box> */}
+
+      <ReactQuill
+        ref={linksRef}
+        theme="snow"
+        modules={{ toolbar: "false" }}
+        value={plainLinks}
+        placeholder="Link imagini"
+        onChange={(content, __, ___, editor) => {
+          setPlainLinks(content);
+          setImageLinks(editor.getText().trim());
+        }}
+      />
       <ReactQuill
         ref={quillRef}
         theme="snow"
