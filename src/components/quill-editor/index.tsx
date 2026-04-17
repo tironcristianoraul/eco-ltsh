@@ -1,105 +1,91 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Typography, Input } from "@mui/material";
-import {
-  useEffect,
-  useRef,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import "./quill.snow.css";
 import ReactQuill from "react-quill-new";
 import { EditorWrapper } from "./index.styled";
 
 const modules = {
-  toolbar: [
-    [{ header: [1, 2, false] }],
-    ["bold", "italic", "underline"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["clean"],
-  ],
+	toolbar: [[{ header: [1, 2, false] }], ["bold", "italic", "underline"], [{ list: "ordered" }, { list: "bullet" }], ["clean"]],
+};
+
+const linkModules = {
+	toolbar: false,
 };
 
 const formats = ["header", "bold", "italic", "underline", "list"];
 
 type Props = {
-  conditions?: boolean;
-  submitFunction: () => void;
-  value: string;
-  setValue: Dispatch<SetStateAction<string>>;
-  title: string;
-  setTitle: Dispatch<SetStateAction<string>>;
-  categories: string;
-  setCategories: Dispatch<SetStateAction<string>>;
-  imageLinks: string;
-  setImageLinks: Dispatch<SetStateAction<string>>;
-  edit?: boolean;
+	conditions?: boolean;
+	submitFunction: () => void;
+	value: string;
+	setValue: Dispatch<SetStateAction<string>>;
+	title: string;
+	setTitle: Dispatch<SetStateAction<string>>;
+	categories: string;
+	setCategories: Dispatch<SetStateAction<string>>;
+	imageLinks: string;
+	setImageLinks: Dispatch<SetStateAction<string>>;
+	edit?: boolean;
 };
 
 const TextEditor = ({
-  conditions = true, // default to true if not provided
-  edit = false, // default to false if not provided
-  submitFunction,
-  value,
-  setValue,
-  title,
-  setTitle,
-  categories,
-  setCategories,
-  imageLinks,
-  setImageLinks,
+	conditions = true, // default to true if not provided
+	edit = false, // default to false if not provided
+	submitFunction,
+	value,
+	setValue,
+	title,
+	setTitle,
+	categories,
+	setCategories,
+	imageLinks,
+	setImageLinks,
 }: Props) => {
-  const [plainText, setPlainText] = useState<string>(value);
-  const [plainLinks, setPlainLinks] = useState<string>(imageLinks);
-  const [textChange, setTextChange] = useState<boolean>(false);
-  const [isReadyToSubmit, setIsReadyToSubmit] = useState<boolean>(false);
-  const quillRef = useRef(null);
-  const linksRef = useRef(null);
+	const [plainText, setPlainText] = useState<string>(value);
+	const [plainLinks, setPlainLinks] = useState<string>(imageLinks);
+	const [textChange, setTextChange] = useState<boolean>(false);
+	const [isReadyToSubmit, setIsReadyToSubmit] = useState<boolean>(false);
+	const quillRef = useRef(null);
+	const linksRef = useRef(null);
 
-  useEffect(() => {
-    // Button is enabled ONLY if at least TWO fields have content
-    const hasPlainText = !!plainText.trim();
-    const hasTitle = !!title.trim();
-    const hasCategories = !!categories.trim();
+	useEffect(() => {
+		// Button is enabled ONLY if at least TWO fields have content
+		const hasPlainText = !!plainText.trim();
+		const hasTitle = !!title.trim();
+		const hasCategories = !!categories.trim();
 
-    console.log(imageLinks);
+		console.log(imageLinks);
 
-    const filledFields = [hasPlainText, hasTitle, hasCategories].filter(
-      Boolean
-    ).length;
+		const filledFields = [hasPlainText, hasTitle, hasCategories].filter(Boolean).length;
 
-    // console.log(filledFields);
+		// console.log(filledFields);
 
-    setIsReadyToSubmit(
-      conditions &&
-        (edit
-          ? textChange || filledFields >= 3
-          : filledFields >= 3 && imageLinks.length > 0)
-    );
-  }, [plainText, title, categories, conditions, imageLinks]);
+		setIsReadyToSubmit(conditions && (edit ? textChange || filledFields >= 3 : filledFields >= 3 && imageLinks.length > 0));
+	}, [plainText, title, categories, conditions, imageLinks]);
 
-  return (
-    <EditorWrapper>
-      <Input
-        onChange={(e) => {
-          setTitle(e.target.value);
-          setTextChange(true);
-        }}
-        value={title}
-        placeholder="Titlu"
-        fullWidth
-      />
-      <Input
-        onChange={(e) => {
-          setCategories(e.target.value);
-          setTextChange(true);
-        }}
-        value={categories}
-        placeholder="Categorie"
-        fullWidth
-      />
+	return (
+		<EditorWrapper>
+			<Input
+				onChange={(e) => {
+					setTitle(e.target.value);
+					setTextChange(true);
+				}}
+				value={title}
+				placeholder="Titlu"
+				fullWidth
+			/>
+			<Input
+				onChange={(e) => {
+					setCategories(e.target.value);
+					setTextChange(true);
+				}}
+				value={categories}
+				placeholder="Categorie"
+				fullWidth
+			/>
 
-      {/* <Box
+			{/* <Box
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -175,33 +161,33 @@ const TextEditor = ({
         </Box>
       </Box> */}
 
-      <ReactQuill
-        ref={linksRef}
-        theme="snow"
-        modules={{ toolbar: "false" }}
-        value={plainLinks}
-        placeholder="Link imagini"
-        onChange={(content, __, ___, editor) => {
-          setPlainLinks(content);
-          setImageLinks(editor.getText().trim());
-        }}
-      />
-      <ReactQuill
-        ref={quillRef}
-        theme="snow"
-        value={value}
-        modules={modules}
-        formats={formats}
-        onChange={(content, _, __, editor) => {
-          setValue(content);
-          setPlainText(editor.getText().trim());
-        }}
-      />
-      <Button disabled={!isReadyToSubmit} onClick={submitFunction}>
-        <Typography>Submit</Typography>
-      </Button>
-    </EditorWrapper>
-  );
+			<ReactQuill
+				ref={linksRef}
+				theme="snow"
+				modules={linkModules}
+				value={plainLinks}
+				placeholder="Link imagini"
+				onChange={(content, __, ___, editor) => {
+					setPlainLinks(content);
+					setImageLinks(editor.getText().trim());
+				}}
+			/>
+			<ReactQuill
+				ref={quillRef}
+				theme="snow"
+				value={value}
+				modules={modules}
+				formats={formats}
+				onChange={(content, _, __, editor) => {
+					setValue(content);
+					setPlainText(editor.getText().trim());
+				}}
+			/>
+			<Button disabled={!isReadyToSubmit} onClick={submitFunction}>
+				<Typography>Submit</Typography>
+			</Button>
+		</EditorWrapper>
+	);
 };
 
 export default TextEditor;
