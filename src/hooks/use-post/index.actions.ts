@@ -18,7 +18,7 @@ export interface IPost {
 
 async function createPost(post: CreatePostFields): Promise<PromiseData | string> {
 	try {
-		const data: PromiseData = await request.post("/posts", post);
+		const data: PromiseData = await request.post("/upload", post);
 		return {
 			message: data.message,
 		};

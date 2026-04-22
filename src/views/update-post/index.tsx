@@ -22,9 +22,11 @@ const UpdatePost = () => {
 	const { id } = useParams();
 
 	const handleSubmit = async () => {
+		console.log(images);
+
 		await update(
 			{
-				imageLink: images.split("\n") || [""],
+				imageLinks: images.split("\n") || [""],
 				title,
 				category,
 				content: value,

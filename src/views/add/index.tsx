@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import TextEditor from "../../components/quill-editor";
 
 export interface CreatePostFields {
-	imageLink: string[];
+	imageLinks: string[];
 	title: string;
 	category: string;
 	content: string;
@@ -23,7 +23,7 @@ const Add = () => {
 
 	const handleSubmit = async () => {
 		await create({
-			imageLink: imageLinks?.split("\n") || [""],
+			imageLinks: imageLinks?.split("\n") || [""],
 			title,
 			category,
 			content: value,

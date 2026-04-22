@@ -57,6 +57,7 @@ export default function SinglePost() {
 						flexDirection: "column",
 						alignItems: "center",
 						gap: 1.5,
+						zIndex: 1000,
 					}}
 				>
 					<FABMenu open={open} toggle={handleToggle} editAction={handleEdit} deleteAction={handleDelete} />

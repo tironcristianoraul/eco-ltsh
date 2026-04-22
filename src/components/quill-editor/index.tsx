@@ -54,10 +54,11 @@ const TextEditor = ({
 		const hasPlainText = !!plainText.trim();
 		const hasTitle = !!title.trim();
 		const hasCategories = !!categories.trim();
+		const hasImageLinks = !!imageLinks.trim();
 
 		console.log(imageLinks);
 
-		const filledFields = [hasPlainText, hasTitle, hasCategories].filter(Boolean).length;
+		const filledFields = [hasPlainText, hasTitle, hasCategories, hasImageLinks].filter(Boolean).length;
 
 		// console.log(filledFields);
 
@@ -170,6 +171,7 @@ const TextEditor = ({
 				onChange={(content, __, ___, editor) => {
 					setPlainLinks(content);
 					setImageLinks(editor.getText().trim());
+					setTextChange(true);
 				}}
 			/>
 			<ReactQuill
@@ -181,6 +183,7 @@ const TextEditor = ({
 				onChange={(content, _, __, editor) => {
 					setValue(content);
 					setPlainText(editor.getText().trim());
+					setTextChange(true);
 				}}
 			/>
 			<Button disabled={!isReadyToSubmit} onClick={submitFunction}>
