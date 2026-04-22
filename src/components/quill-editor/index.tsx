@@ -50,6 +50,21 @@ const TextEditor = ({
 	const linksRef = useRef(null);
 
 	useEffect(() => {
+		// Check if the local state is empty OR if it's Quill's default empty formatting
+		const isLinksEmpty = !plainLinks || plainLinks === "<p><br></p>";
+
+		if (imageLinks && isLinksEmpty) {
+			setPlainLinks(imageLinks);
+		}
+
+		// Do the exact same for your main value!
+		const isTextEmpty = !plainText || plainText === "<p><br></p>";
+		if (value && isTextEmpty) {
+			setPlainText(value); // Assuming plainText is meant to hold HTML locally
+		}
+	}, [imageLinks, value, plainLinks, plainText]);
+
+	useEffect(() => {
 		// Button is enabled ONLY if at least TWO fields have content
 		const hasPlainText = !!plainText.trim();
 		const hasTitle = !!title.trim();
@@ -168,10 +183,14 @@ const TextEditor = ({
 				modules={linkModules}
 				value={plainLinks}
 				placeholder="Link imagini"
-				onChange={(content, __, ___, editor) => {
+				onChange={(content, __, source, editor) => {
 					setPlainLinks(content);
-					setImageLinks(editor.getText().trim());
-					setTextChange(true);
+
+					// ONLY update the parent states if a human actually typed something
+					if (source === "user") {
+						setImageLinks(editor.getText().trim());
+						setTextChange(true);
+					}
 				}}
 			/>
 			<ReactQuill
