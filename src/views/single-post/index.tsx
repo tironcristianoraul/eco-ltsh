@@ -42,7 +42,7 @@ export default function SinglePost() {
 
 	const handleDelete = async () => {
 		await deleteSinglePost(post._id);
-		if (!isError) navigate("/posts");
+		if (!isError) navigate("/post");
 	};
 
 	return (
