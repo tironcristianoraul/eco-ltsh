@@ -5,72 +5,78 @@ import type { CreatePostFields } from "../../views/add";
 import type { UpdatePostFields } from "../../views/update-post";
 
 interface PromiseData {
-	message: string;
+  message: string;
 }
 
 export interface IPost {
-	title: string;
-	category: string;
-	content: string;
-	imageLinks: string[];
-	_id: string;
+  title: string;
+  category: string;
+  content: string;
+  imageLinks: string[];
+  _id: string;
 }
 
-async function createPost(post: CreatePostFields): Promise<PromiseData | string> {
-	try {
-		const data: PromiseData = await request.post("/upload", post);
-		return {
-			message: data.message,
-		};
-	} catch (e) {
-		const error = e as AxiosError;
-		const data = error.response?.data as { error: string };
-		throw new Error(data?.error || "Failed to login.");
-	}
+async function createPost(
+  post: CreatePostFields
+): Promise<PromiseData | string> {
+  try {
+    const data: PromiseData = await request.post("/upload", post);
+    return {
+      message: data.message,
+    };
+  } catch (e) {
+    const error = e as AxiosError;
+    const data = error.response?.data as { error: string };
+    throw new Error(data?.error || "Failed to login.");
+  }
 }
 
 async function getAllPosts(): Promise<IPost[] | string> {
-	try {
-		const res: any = await guestRequest.get("/posts");
-		return res?.data?.posts;
-	} catch (e) {
-		const error = e as AxiosError;
-		const data = error.response?.data as { error: string };
-		throw new Error(data?.error || "Failed to login.");
-	}
+  try {
+    const res: any = await guestRequest.get("/posts");
+    return res?.data?.posts;
+  } catch (e) {
+    const error = e as AxiosError;
+    const data = error.response?.data as { error: string };
+    throw new Error(data?.error || "Failed to login.");
+  }
 }
 
 async function getSinglePost(id: string): Promise<IPost[] | string> {
-	try {
-		const res: any = await guestRequest.get(`/post/${id}`);
-		return res?.data?.post;
-	} catch (e) {
-		const error = e as AxiosError;
-		const data = error.response?.data as { error: string };
-		throw new Error(data?.error || "Failed to login.");
-	}
+  try {
+    const res: any = await guestRequest.get(`/post/${id}`);
+    return res?.data?.post;
+  } catch (e) {
+    const error = e as AxiosError;
+    const data = error.response?.data as { error: string };
+    throw new Error(data?.error || "Failed to login.");
+  }
 }
 
 async function deleteSinglePost(id: string): Promise<IPost[] | string> {
-	try {
-		const res: any = await request.delete(`/post/${id}`);
-		return res?.data?.post;
-	} catch (e) {
-		const error = e as AxiosError;
-		const data = error.response?.data as { error: string };
-		throw new Error(data?.error || "Failed to login.");
-	}
+  try {
+    const res: any = await request.delete(`/post/${id}`);
+    return res?.data?.post;
+  } catch (e) {
+    const error = e as AxiosError;
+    const data = error.response?.data as { error: string };
+    throw new Error(data?.error || "Failed to login.");
+  }
 }
 
-async function updatePost(post: UpdatePostFields, id: string): Promise<IPost[] | string> {
-	try {
-		const res: any = await request.patch(`/post/${id}`, post);
-		return res?.data?.post;
-	} catch (e) {
-		const error = e as AxiosError;
-		const data = error.response?.data as { error: string };
-		throw new Error(data?.error || "Failed to login.");
-	}
+async function updatePost(
+  post: UpdatePostFields,
+  id: string
+): Promise<IPost[] | string> {
+  try {
+    const res: any = await request.patch(`/post/${id}`, post);
+    return res?.data?.post;
+  } catch (e) {
+    const error = e as AxiosError;
+    console.log("pizda ", error);
+    const data = error.response?.data as { error: string };
+    throw new Error(data?.error || "Failed to login.");
+  }
 }
 
 export { createPost, getAllPosts, getSinglePost, deleteSinglePost, updatePost };
